@@ -1,0 +1,97 @@
+app: sonostate
+data:
+  batch_size: 64
+  crop_size: 224
+  dataset_fpcs:
+  - 16
+  dataset_type: VideoDataset
+  datasets:
+  - /scratch/bxu/project/echonet/pretrain_annotations.csv
+  datasets_weights:
+  - 1.0
+  fps: 8
+  num_clips: 2
+  num_workers: 8
+  patch_size: 16
+  persistent_workers: true
+  pin_mem: true
+  tubelet_size: 2
+data_aug:
+  auto_augment: false
+  motion_shift: false
+  random_resize_aspect_ratio:
+  - 0.9
+  - 1.1
+  random_resize_scale:
+  - 0.5
+  - 1.0
+  reprob: 0.0
+folder: /scratch/bxu/project/EchoJEPA/checkpoints/sonostate_pretrained
+loss:
+  loss_exp: 1.0
+mask:
+- aspect_ratio:
+  - 0.75
+  - 1.5
+  full_complement: false
+  max_keep: null
+  max_temporal_keep: 1.0
+  num_blocks: 8
+  spatial_scale:
+  - 0.15
+  - 0.15
+  temporal_scale:
+  - 1.0
+  - 1.0
+- aspect_ratio:
+  - 0.75
+  - 1.5
+  full_complement: false
+  max_keep: null
+  max_temporal_keep: 1.0
+  num_blocks: 2
+  spatial_scale:
+  - 0.7
+  - 0.7
+  temporal_scale:
+  - 1.0
+  - 1.0
+meta:
+  dtype: bfloat16
+  load_checkpoint: false
+  read_checkpoint: null
+  save_every_freq: 25
+  seed: 234
+  use_sdpa: true
+model:
+  model_name: vit_large
+  num_mask_tokens: 10
+  pred_depth: 12
+  pred_embed_dim: 384
+  pred_num_heads: 12
+  uniform_power: true
+  use_activation_checkpointing: true
+  use_mask_tokens: true
+  use_rope: true
+  zero_init_mask_tokens: true
+nodes: 1
+optimization:
+  anneal_ckpt: /scratch/bxu/project/EchoJEPA/checkpoints/pretrained/vitl.pt
+  ema:
+  - 0.998
+  - 1.0
+  epochs: 300
+  final_lr: 1.0e-06
+  final_weight_decay: 0.04
+  force_load_pretrain: true
+  ipe_scale: 1.0
+  is_anneal: false
+  lr: 3.0e-05
+  start_lr: 1.0e-06
+  warmup: 10
+  weight_decay: 0.04
+sonostate:
+  lambda_forecast: 0.1
+  state_dim: 256
+  transition_hidden_dim: 512
+tasks_per_node: 7

@@ -1,0 +1,28 @@
+eval_name: latent_forecast
+checkpoint: /path/to/sonostate/latest.pt
+output_dir: /path/to/eval_output
+dtype: bfloat16
+max_horizon: 10
+model:
+  model_name: vit_large
+  crop_size: 224
+  patch_size: 16
+  num_frames: 16
+  tubelet_size: 2
+  uniform_power: true
+  use_sdpa: true
+  use_rope: true
+  use_activation_checkpointing: false
+sonostate:
+  state_dim: 256
+  transition_hidden_dim: 512
+data:
+  dataset_type: VideoDataset
+  datasets:
+  - /path/to/val_annotations.csv
+  dataset_fpcs:
+  - 16
+  fps: 8
+  num_clips: 11
+  batch_size: 8
+  num_workers: 4
