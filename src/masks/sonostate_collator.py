@@ -17,6 +17,7 @@ class SonoStateCollator:
         crop_size=224,
         patch_size=16,
         tubelet_size=2,
+        shuffle_pairs=False,
     ):
         self.mask_collator = MaskCollator(
             cfgs_mask=cfgs_mask,
@@ -26,6 +27,11 @@ class SonoStateCollator:
             tubelet_size=tubelet_size,
         )
         self.mask_generators = self.mask_collator.mask_generators
+        # When True, the (clip_t, clip_{t+1}) pairing is broken by permuting
+        # clip_{t+1} across the batch. This is the C1_shuffled_time control:
+        # if the model still drives the forecast loss down, then the loop
+        # structure is *not* about temporal causality.
+        self.shuffle_pairs = shuffle_pairs
 
     def step(self):
         self.mask_collator.step()
@@ -70,6 +76,14 @@ class SonoStateCollator:
                 collated_masks_pred.append(masks_pred)
 
             clip_next_tensor = torch.stack(clip_next_batch)
+            if self.shuffle_pairs and clip_next_tensor.size(0) > 1:
+                # Random derangement of the next-clip batch dimension: every
+                # sample's "next" clip is replaced with another sample's.
+                perm = torch.randperm(clip_next_tensor.size(0))
+                # Avoid identity-on-any-element so the control is meaningful.
+                if torch.any(perm == torch.arange(clip_next_tensor.size(0))):
+                    perm = torch.roll(perm, shifts=1, dims=0)
+                clip_next_tensor = clip_next_tensor[perm]
 
             fpc_collations.append(
                 (collated_t, collated_masks_enc, collated_masks_pred, clip_next_tensor)

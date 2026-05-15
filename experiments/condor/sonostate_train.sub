@@ -1,0 +1,16 @@
+# Condor submit file template for one SonoState training cell.
+# Submit via: condor_submit experiments/condor/sonostate_train.sub CONFIG=/abs/path.yaml
+universe                = vanilla
+executable              = experiments/condor/run_cell.sh
+arguments               = ""
+environment             = "CONFIG=$(CONFIG) REPO=$ENV(PWD) GPU_LIST=cuda:0 cuda:1 cuda:2 cuda:3 cuda:4 cuda:5 cuda:6 cuda:7"
+should_transfer_files   = NO
+request_gpus            = 8
+request_cpus            = 64
+request_memory          = 256GB
+request_disk            = 50GB
++RequiresGPUType        = "H100"
+output                  = experiments/condor/_log/$(Cluster).$(Process).out
+error                   = experiments/condor/_log/$(Cluster).$(Process).err
+log                     = experiments/condor/_log/$(Cluster).$(Process).log
+queue

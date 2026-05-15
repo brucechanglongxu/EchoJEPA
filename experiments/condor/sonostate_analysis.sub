@@ -1,0 +1,15 @@
+# Condor submit file template for one analysis cell.
+# Required vars: CHECKPOINT, OUT, EXTRA  (EXTRA passes script-specific flags)
+universe                = vanilla
+executable              = /bin/bash
+arguments               = "-lc 'cd $ENV(PWD) && PYTHONPATH=$ENV(PWD) python3 -m experiments.analysis.$(SCRIPT) --checkpoint $(CHECKPOINT) --out $(OUT) $(EXTRA)'"
+should_transfer_files   = NO
+request_gpus            = 1
+request_cpus            = 8
+request_memory          = 64GB
+request_disk            = 20GB
++RequiresGPUType        = "H100"
+output                  = experiments/condor/_log/$(Cluster).$(Process).out
+error                   = experiments/condor/_log/$(Cluster).$(Process).err
+log                     = experiments/condor/_log/$(Cluster).$(Process).log
+queue

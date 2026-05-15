@@ -129,6 +129,17 @@ def main(args, resume_preempt=False):
     lambda_forecast = cfgs_sonostate.get("lambda_forecast", 0.1)
     lambda_uniform = cfgs_sonostate.get("lambda_uniform", 1.0)
     freeze_encoder = cfgs_sonostate.get("freeze_encoder", False)
+    # Loss-component ablations (S3_forecast_loss)
+    forecast_l1 = cfgs_sonostate.get("forecast_l1", True)
+    forecast_cos = cfgs_sonostate.get("forecast_cos", True)
+    if not (forecast_l1 or forecast_cos):
+        raise ValueError("At least one of forecast_l1, forecast_cos must be True")
+    # Transition init ablations (S5_init)
+    transition_zero_init = cfgs_sonostate.get("transition_zero_init", True)
+    transition_residual = cfgs_sonostate.get("transition_residual", True)
+    transition_init_scale = cfgs_sonostate.get("transition_init_scale", -4.6)
+    # Shuffled-time control (C1_shuffled_time): permute clip_{t+1} across batch
+    shuffle_pairs = cfgs_sonostate.get("shuffle_pairs", False)
 
     # -------------------------------------------------------------------
     # DATA
@@ -243,6 +254,9 @@ def main(args, resume_preempt=False):
         use_activation_checkpointing=use_activation_checkpointing,
         state_dim=state_dim,
         transition_hidden_dim=transition_hidden_dim,
+        transition_zero_init=transition_zero_init,
+        transition_residual=transition_residual,
+        transition_init_scale=transition_init_scale,
     )
 
     logger.info("Creating target_encoder via deepcopy on the GPU...")
@@ -264,6 +278,7 @@ def main(args, resume_preempt=False):
         crop_size=crop_size,
         patch_size=patch_size,
         tubelet_size=tubelet_size,
+        shuffle_pairs=shuffle_pairs,
     )
 
     transform = make_transforms(
@@ -340,8 +355,14 @@ def main(args, resume_preempt=False):
 
     # -------------------------------------------------------------------
     # CHECKPOINT LOADING
+    # If latest.pt already exists in the cell folder (e.g. after Slurm
+    # preemption + requeue), prefer resuming from it over re-loading the
+    # pretrained anneal checkpoint. This is essential on preemptible
+    # partitions to avoid restarting every cell from epoch 0.
     # -------------------------------------------------------------------
-    if force_load_pretrain:
+    latest_path = os.path.join(folder, "latest.pt")
+    have_latest = os.path.exists(latest_path)
+    if force_load_pretrain and not have_latest:
         if anneal_ckpt_path and os.path.exists(anneal_ckpt_path):
             logger.info(f"FORCE-LOADING pretrained model from {anneal_ckpt_path}")
             checkpoint = robust_checkpoint_loader(anneal_ckpt_path, map_location=torch.device("cpu"))
@@ -627,9 +648,12 @@ def main(args, resume_preempt=False):
                         z_next_cat = torch.cat(z_next_list, dim=0).detach()
 
                         z_pred = transition(z_t_cat)
-                        loss_l1 = F.l1_loss(z_pred, z_next_cat)
-                        loss_cos = 1.0 - F.cosine_similarity(z_pred, z_next_cat, dim=-1).mean()
-                        loss_forecast = loss_l1 + loss_cos
+                        loss_terms = []
+                        if forecast_l1:
+                            loss_terms.append(F.l1_loss(z_pred, z_next_cat))
+                        if forecast_cos:
+                            loss_terms.append(1.0 - F.cosine_similarity(z_pred, z_next_cat, dim=-1).mean())
+                        loss_forecast = sum(loss_terms) / len(loss_terms)
 
                         # Uniformity loss: push different states apart on sphere
                         # (prevents collapse to a single point)

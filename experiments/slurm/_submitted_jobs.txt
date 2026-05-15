@@ -1,0 +1,147 @@
+train  S1_dim__d32  jobid=6944043
+ana    forecast_curves    S1_dim__d32  jobid=6944044  parent=6944043
+ana    phase_decoding     S1_dim__d32  jobid=6944045  parent=6944043
+ana    heart_rate         S1_dim__d32  jobid=6944046  parent=6944043
+ana    geometry           S1_dim__d32  jobid=6944047  parent=6944043
+ana    ef_probe           S1_dim__d32  jobid=6944048  parent=6944043
+ana    cycle_consistency  S1_dim__d32  jobid=6944049  parent=6944043
+train  S1_dim__d64  jobid=6944050
+ana    forecast_curves    S1_dim__d64  jobid=6944051  parent=6944050
+ana    phase_decoding     S1_dim__d64  jobid=6944052  parent=6944050
+ana    heart_rate         S1_dim__d64  jobid=6944053  parent=6944050
+ana    geometry           S1_dim__d64  jobid=6944054  parent=6944050
+ana    ef_probe           S1_dim__d64  jobid=6944055  parent=6944050
+ana    cycle_consistency  S1_dim__d64  jobid=6944056  parent=6944050
+train  S1_dim__d128  jobid=6944057
+ana    forecast_curves    S1_dim__d128  jobid=6944058  parent=6944057
+ana    phase_decoding     S1_dim__d128  jobid=6944059  parent=6944057
+ana    heart_rate         S1_dim__d128  jobid=6944060  parent=6944057
+ana    geometry           S1_dim__d128  jobid=6944061  parent=6944057
+ana    ef_probe           S1_dim__d128  jobid=6944062  parent=6944057
+ana    cycle_consistency  S1_dim__d128  jobid=6944063  parent=6944057
+train  S1_dim__d256  jobid=6944064
+ana    forecast_curves    S1_dim__d256  jobid=6944065  parent=6944064
+ana    phase_decoding     S1_dim__d256  jobid=6944066  parent=6944064
+ana    heart_rate         S1_dim__d256  jobid=6944067  parent=6944064
+ana    geometry           S1_dim__d256  jobid=6944068  parent=6944064
+ana    ef_probe           S1_dim__d256  jobid=6944069  parent=6944064
+ana    cycle_consistency  S1_dim__d256  jobid=6944070  parent=6944064
+train  S1_dim__d512  jobid=6944071
+ana    forecast_curves    S1_dim__d512  jobid=6944072  parent=6944071
+ana    phase_decoding     S1_dim__d512  jobid=6944073  parent=6944071
+ana    heart_rate         S1_dim__d512  jobid=6944074  parent=6944071
+ana    geometry           S1_dim__d512  jobid=6944075  parent=6944071
+ana    ef_probe           S1_dim__d512  jobid=6944076  parent=6944071
+ana    cycle_consistency  S1_dim__d512  jobid=6944077  parent=6944071
+train  S2_lambda_u__u0000  jobid=6944078
+ana    forecast_curves    S2_lambda_u__u0000  jobid=6944079  parent=6944078
+ana    phase_decoding     S2_lambda_u__u0000  jobid=6944080  parent=6944078
+ana    heart_rate         S2_lambda_u__u0000  jobid=6944081  parent=6944078
+ana    geometry           S2_lambda_u__u0000  jobid=6944082  parent=6944078
+ana    ef_probe           S2_lambda_u__u0000  jobid=6944083  parent=6944078
+ana    cycle_consistency  S2_lambda_u__u0000  jobid=6944084  parent=6944078
+train  S2_lambda_u__u0010  jobid=6944085
+ana    forecast_curves    S2_lambda_u__u0010  jobid=6944086  parent=6944085
+ana    phase_decoding     S2_lambda_u__u0010  jobid=6944087  parent=6944085
+ana    heart_rate         S2_lambda_u__u0010  jobid=6944088  parent=6944085
+ana    geometry           S2_lambda_u__u0010  jobid=6944089  parent=6944085
+ana    ef_probe           S2_lambda_u__u0010  jobid=6944090  parent=6944085
+ana    cycle_consistency  S2_lambda_u__u0010  jobid=6944091  parent=6944085
+train  S2_lambda_u__u0100  jobid=6944092
+ana    forecast_curves    S2_lambda_u__u0100  jobid=6944093  parent=6944092
+ana    phase_decoding     S2_lambda_u__u0100  jobid=6944094  parent=6944092
+ana    heart_rate         S2_lambda_u__u0100  jobid=6944095  parent=6944092
+ana    geometry           S2_lambda_u__u0100  jobid=6944096  parent=6944092
+ana    ef_probe           S2_lambda_u__u0100  jobid=6944097  parent=6944092
+ana    cycle_consistency  S2_lambda_u__u0100  jobid=6944098  parent=6944092
+train  S2_lambda_u__u0500  jobid=6944099
+ana    forecast_curves    S2_lambda_u__u0500  jobid=6944100  parent=6944099
+ana    phase_decoding     S2_lambda_u__u0500  jobid=6944101  parent=6944099
+ana    heart_rate         S2_lambda_u__u0500  jobid=6944102  parent=6944099
+ana    geometry           S2_lambda_u__u0500  jobid=6944103  parent=6944099
+ana    ef_probe           S2_lambda_u__u0500  jobid=6944104  parent=6944099
+ana    cycle_consistency  S2_lambda_u__u0500  jobid=6944105  parent=6944099
+train  S3_forecast_loss__l1  jobid=6944106
+ana    forecast_curves    S3_forecast_loss__l1  jobid=6944107  parent=6944106
+ana    phase_decoding     S3_forecast_loss__l1  jobid=6944108  parent=6944106
+ana    heart_rate         S3_forecast_loss__l1  jobid=6944109  parent=6944106
+ana    geometry           S3_forecast_loss__l1  jobid=6944110  parent=6944106
+ana    ef_probe           S3_forecast_loss__l1  jobid=6944111  parent=6944106
+ana    cycle_consistency  S3_forecast_loss__l1  jobid=6944112  parent=6944106
+train  S3_forecast_loss__cos  jobid=6944113
+ana    forecast_curves    S3_forecast_loss__cos  jobid=6944114  parent=6944113
+ana    phase_decoding     S3_forecast_loss__cos  jobid=6944115  parent=6944113
+ana    heart_rate         S3_forecast_loss__cos  jobid=6944116  parent=6944113
+ana    geometry           S3_forecast_loss__cos  jobid=6944117  parent=6944113
+ana    ef_probe           S3_forecast_loss__cos  jobid=6944118  parent=6944113
+ana    cycle_consistency  S3_forecast_loss__cos  jobid=6944119  parent=6944113
+train  S3_forecast_loss__l1cos  jobid=6944120
+ana    forecast_curves    S3_forecast_loss__l1cos  jobid=6944121  parent=6944120
+ana    phase_decoding     S3_forecast_loss__l1cos  jobid=6944122  parent=6944120
+ana    heart_rate         S3_forecast_loss__l1cos  jobid=6944123  parent=6944120
+ana    geometry           S3_forecast_loss__l1cos  jobid=6944124  parent=6944120
+ana    ef_probe           S3_forecast_loss__l1cos  jobid=6944125  parent=6944120
+ana    cycle_consistency  S3_forecast_loss__l1cos  jobid=6944126  parent=6944120
+train  S4_encoder__frozen  jobid=6944127
+ana    forecast_curves    S4_encoder__frozen  jobid=6944128  parent=6944127
+ana    phase_decoding     S4_encoder__frozen  jobid=6944129  parent=6944127
+ana    heart_rate         S4_encoder__frozen  jobid=6944130  parent=6944127
+ana    geometry           S4_encoder__frozen  jobid=6944131  parent=6944127
+ana    ef_probe           S4_encoder__frozen  jobid=6944132  parent=6944127
+ana    cycle_consistency  S4_encoder__frozen  jobid=6944133  parent=6944127
+train  S4_encoder__ftuned  jobid=6944134
+ana    forecast_curves    S4_encoder__ftuned  jobid=6944135  parent=6944134
+ana    phase_decoding     S4_encoder__ftuned  jobid=6944136  parent=6944134
+ana    heart_rate         S4_encoder__ftuned  jobid=6944137  parent=6944134
+ana    geometry           S4_encoder__ftuned  jobid=6944138  parent=6944134
+ana    ef_probe           S4_encoder__ftuned  jobid=6944139  parent=6944134
+ana    cycle_consistency  S4_encoder__ftuned  jobid=6944140  parent=6944134
+train  S5_init__identity  jobid=6944141
+ana    forecast_curves    S5_init__identity  jobid=6944142  parent=6944141
+ana    phase_decoding     S5_init__identity  jobid=6944143  parent=6944141
+ana    heart_rate         S5_init__identity  jobid=6944144  parent=6944141
+ana    geometry           S5_init__identity  jobid=6944145  parent=6944141
+ana    ef_probe           S5_init__identity  jobid=6944146  parent=6944141
+ana    cycle_consistency  S5_init__identity  jobid=6944147  parent=6944141
+train  S5_init__random  jobid=6944148
+ana    forecast_curves    S5_init__random  jobid=6944149  parent=6944148
+ana    phase_decoding     S5_init__random  jobid=6944150  parent=6944148
+ana    heart_rate         S5_init__random  jobid=6944151  parent=6944148
+ana    geometry           S5_init__random  jobid=6944152  parent=6944148
+ana    ef_probe           S5_init__random  jobid=6944153  parent=6944148
+ana    cycle_consistency  S5_init__random  jobid=6944154  parent=6944148
+train  S5_init__noresidual  jobid=6944155
+ana    forecast_curves    S5_init__noresidual  jobid=6944156  parent=6944155
+ana    phase_decoding     S5_init__noresidual  jobid=6944157  parent=6944155
+ana    heart_rate         S5_init__noresidual  jobid=6944158  parent=6944155
+ana    geometry           S5_init__noresidual  jobid=6944159  parent=6944155
+ana    ef_probe           S5_init__noresidual  jobid=6944160  parent=6944155
+ana    cycle_consistency  S5_init__noresidual  jobid=6944161  parent=6944155
+train  S6_schedule__ep150  jobid=6944162
+ana    forecast_curves    S6_schedule__ep150  jobid=6944163  parent=6944162
+ana    phase_decoding     S6_schedule__ep150  jobid=6944164  parent=6944162
+ana    heart_rate         S6_schedule__ep150  jobid=6944165  parent=6944162
+ana    geometry           S6_schedule__ep150  jobid=6944166  parent=6944162
+ana    ef_probe           S6_schedule__ep150  jobid=6944167  parent=6944162
+ana    cycle_consistency  S6_schedule__ep150  jobid=6944168  parent=6944162
+train  S6_schedule__ep300_cool  jobid=6944169
+ana    forecast_curves    S6_schedule__ep300_cool  jobid=6944170  parent=6944169
+ana    phase_decoding     S6_schedule__ep300_cool  jobid=6944171  parent=6944169
+ana    heart_rate         S6_schedule__ep300_cool  jobid=6944172  parent=6944169
+ana    geometry           S6_schedule__ep300_cool  jobid=6944173  parent=6944169
+ana    ef_probe           S6_schedule__ep300_cool  jobid=6944174  parent=6944169
+ana    cycle_consistency  S6_schedule__ep300_cool  jobid=6944175  parent=6944169
+train  C1_shuffled_time__true  jobid=6944176
+ana    forecast_curves    C1_shuffled_time__true  jobid=6944177  parent=6944176
+ana    phase_decoding     C1_shuffled_time__true  jobid=6944178  parent=6944176
+ana    heart_rate         C1_shuffled_time__true  jobid=6944179  parent=6944176
+ana    geometry           C1_shuffled_time__true  jobid=6944180  parent=6944176
+ana    ef_probe           C1_shuffled_time__true  jobid=6944181  parent=6944176
+ana    cycle_consistency  C1_shuffled_time__true  jobid=6944182  parent=6944176
+train  C1_shuffled_time__shuffled  jobid=6944183
+ana    forecast_curves    C1_shuffled_time__shuffled  jobid=6944184  parent=6944183
+ana    phase_decoding     C1_shuffled_time__shuffled  jobid=6944185  parent=6944183
+ana    heart_rate         C1_shuffled_time__shuffled  jobid=6944186  parent=6944183
+ana    geometry           C1_shuffled_time__shuffled  jobid=6944187  parent=6944183
+ana    ef_probe           C1_shuffled_time__shuffled  jobid=6944188  parent=6944183
+ana    cycle_consistency  C1_shuffled_time__shuffled  jobid=6944189  parent=6944183

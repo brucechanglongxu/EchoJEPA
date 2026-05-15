@@ -1,0 +1,128 @@
+[
+  {
+    "sweep": "S1_dim",
+    "cell": "d32",
+    "config": "/mnt/home/brucexu/nips/EchoJEPA/experiments/configs/_generated/S1_dim/d32.yaml",
+    "folder": "/mnt/vast/exp/brucexu/EchoJEPA/experiments_2026/S1_dim/d32"
+  },
+  {
+    "sweep": "S1_dim",
+    "cell": "d64",
+    "config": "/mnt/home/brucexu/nips/EchoJEPA/experiments/configs/_generated/S1_dim/d64.yaml",
+    "folder": "/mnt/vast/exp/brucexu/EchoJEPA/experiments_2026/S1_dim/d64"
+  },
+  {
+    "sweep": "S1_dim",
+    "cell": "d128",
+    "config": "/mnt/home/brucexu/nips/EchoJEPA/experiments/configs/_generated/S1_dim/d128.yaml",
+    "folder": "/mnt/vast/exp/brucexu/EchoJEPA/experiments_2026/S1_dim/d128"
+  },
+  {
+    "sweep": "S1_dim",
+    "cell": "d256",
+    "config": "/mnt/home/brucexu/nips/EchoJEPA/experiments/configs/_generated/S1_dim/d256.yaml",
+    "folder": "/mnt/vast/exp/brucexu/EchoJEPA/experiments_2026/S1_dim/d256"
+  },
+  {
+    "sweep": "S1_dim",
+    "cell": "d512",
+    "config": "/mnt/home/brucexu/nips/EchoJEPA/experiments/configs/_generated/S1_dim/d512.yaml",
+    "folder": "/mnt/vast/exp/brucexu/EchoJEPA/experiments_2026/S1_dim/d512"
+  },
+  {
+    "sweep": "S2_lambda_u",
+    "cell": "u0000",
+    "config": "/mnt/home/brucexu/nips/EchoJEPA/experiments/configs/_generated/S2_lambda_u/u0000.yaml",
+    "folder": "/mnt/vast/exp/brucexu/EchoJEPA/experiments_2026/S2_lambda_u/u0000"
+  },
+  {
+    "sweep": "S2_lambda_u",
+    "cell": "u0010",
+    "config": "/mnt/home/brucexu/nips/EchoJEPA/experiments/configs/_generated/S2_lambda_u/u0010.yaml",
+    "folder": "/mnt/vast/exp/brucexu/EchoJEPA/experiments_2026/S2_lambda_u/u0010"
+  },
+  {
+    "sweep": "S2_lambda_u",
+    "cell": "u0100",
+    "config": "/mnt/home/brucexu/nips/EchoJEPA/experiments/configs/_generated/S2_lambda_u/u0100.yaml",
+    "folder": "/mnt/vast/exp/brucexu/EchoJEPA/experiments_2026/S2_lambda_u/u0100"
+  },
+  {
+    "sweep": "S2_lambda_u",
+    "cell": "u0500",
+    "config": "/mnt/home/brucexu/nips/EchoJEPA/experiments/configs/_generated/S2_lambda_u/u0500.yaml",
+    "folder": "/mnt/vast/exp/brucexu/EchoJEPA/experiments_2026/S2_lambda_u/u0500"
+  },
+  {
+    "sweep": "S3_forecast_loss",
+    "cell": "l1",
+    "config": "/mnt/home/brucexu/nips/EchoJEPA/experiments/configs/_generated/S3_forecast_loss/l1.yaml",
+    "folder": "/mnt/vast/exp/brucexu/EchoJEPA/experiments_2026/S3_forecast_loss/l1"
+  },
+  {
+    "sweep": "S3_forecast_loss",
+    "cell": "cos",
+    "config": "/mnt/home/brucexu/nips/EchoJEPA/experiments/configs/_generated/S3_forecast_loss/cos.yaml",
+    "folder": "/mnt/vast/exp/brucexu/EchoJEPA/experiments_2026/S3_forecast_loss/cos"
+  },
+  {
+    "sweep": "S3_forecast_loss",
+    "cell": "l1cos",
+    "config": "/mnt/home/brucexu/nips/EchoJEPA/experiments/configs/_generated/S3_forecast_loss/l1cos.yaml",
+    "folder": "/mnt/vast/exp/brucexu/EchoJEPA/experiments_2026/S3_forecast_loss/l1cos"
+  },
+  {
+    "sweep": "S4_encoder",
+    "cell": "frozen",
+    "config": "/mnt/home/brucexu/nips/EchoJEPA/experiments/configs/_generated/S4_encoder/frozen.yaml",
+    "folder": "/mnt/vast/exp/brucexu/EchoJEPA/experiments_2026/S4_encoder/frozen"
+  },
+  {
+    "sweep": "S4_encoder",
+    "cell": "ftuned",
+    "config": "/mnt/home/brucexu/nips/EchoJEPA/experiments/configs/_generated/S4_encoder/ftuned.yaml",
+    "folder": "/mnt/vast/exp/brucexu/EchoJEPA/experiments_2026/S4_encoder/ftuned"
+  },
+  {
+    "sweep": "S5_init",
+    "cell": "identity",
+    "config": "/mnt/home/brucexu/nips/EchoJEPA/experiments/configs/_generated/S5_init/identity.yaml",
+    "folder": "/mnt/vast/exp/brucexu/EchoJEPA/experiments_2026/S5_init/identity"
+  },
+  {
+    "sweep": "S5_init",
+    "cell": "random",
+    "config": "/mnt/home/brucexu/nips/EchoJEPA/experiments/configs/_generated/S5_init/random.yaml",
+    "folder": "/mnt/vast/exp/brucexu/EchoJEPA/experiments_2026/S5_init/random"
+  },
+  {
+    "sweep": "S5_init",
+    "cell": "noresidual",
+    "config": "/mnt/home/brucexu/nips/EchoJEPA/experiments/configs/_generated/S5_init/noresidual.yaml",
+    "folder": "/mnt/vast/exp/brucexu/EchoJEPA/experiments_2026/S5_init/noresidual"
+  },
+  {
+    "sweep": "S6_schedule",
+    "cell": "ep150",
+    "config": "/mnt/home/brucexu/nips/EchoJEPA/experiments/configs/_generated/S6_schedule/ep150.yaml",
+    "folder": "/mnt/vast/exp/brucexu/EchoJEPA/experiments_2026/S6_schedule/ep150"
+  },
+  {
+    "sweep": "S6_schedule",
+    "cell": "ep300_cool",
+    "config": "/mnt/home/brucexu/nips/EchoJEPA/experiments/configs/_generated/S6_schedule/ep300_cool.yaml",
+    "folder": "/mnt/vast/exp/brucexu/EchoJEPA/experiments_2026/S6_schedule/ep300_cool"
+  },
+  {
+    "sweep": "C1_shuffled_time",
+    "cell": "true",
+    "config": "/mnt/home/brucexu/nips/EchoJEPA/experiments/configs/_generated/C1_shuffled_time/true.yaml",
+    "folder": "/mnt/vast/exp/brucexu/EchoJEPA/experiments_2026/C1_shuffled_time/true"
+  },
+  {
+    "sweep": "C1_shuffled_time",
+    "cell": "shuffled",
+    "config": "/mnt/home/brucexu/nips/EchoJEPA/experiments/configs/_generated/C1_shuffled_time/shuffled.yaml",
+    "folder": "/mnt/vast/exp/brucexu/EchoJEPA/experiments_2026/C1_shuffled_time/shuffled"
+  }
+]

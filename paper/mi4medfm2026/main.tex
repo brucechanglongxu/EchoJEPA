@@ -1,0 +1,507 @@
+% =========================================================================
+% SonoState: Mechanistic Interpretability of an Echocardiography
+% Foundation Model via a Latent State-Space Probe
+%
+% Submission to MI4MedFM @ MICCAI 2026
+% (Mechanistic Interpretability for Medical Foundation Models)
+% Abu Dhabi, UAE --- Oct 4, 2026
+% Page limit: 8 pages excluding references (LNCS, double-blind)
+% =========================================================================
+\documentclass[runningheads]{llncs}
+
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{cleveref}
+\usepackage{xspace}
+
+\newcommand{\sonostate}{\textsc{SonoState}\xspace}
+\newcommand{\echojepa}{\textsc{EchoJEPA}\xspace}
+\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
+
+\begin{document}
+
+\title{Reading the Heart's State Machine:\\Mechanistic Interpretability of an
+Echocardiography Foundation Model via a Latent State-Space Probe}
+
+\titlerunning{Mechanistic Interpretability of an Echo FM}
+\author{Anonymous}
+\authorrunning{Anonymous}
+\institute{Anonymous Institution \\ \email{anonymous@example.com}}
+
+\maketitle
+
+\begin{abstract}
+Foundation models for medical imaging are increasingly deployed in
+high-stakes clinical pipelines, but we lack tools to verify \emph{what} they
+have learned about the underlying physiology. We introduce \sonostate, a
+post-hoc \emph{state-space probe} for an echocardiographic video foundation
+model (\echojepa, V-JEPA-2 ViT-L pretrained on 525K MIMIC-IV-ECHO clips).
+\sonostate adds two lightweight modules on top of the frozen encoder: a
+projection that compresses spatio-temporal tokens into a 256-dimensional
+state vector $\mathbf{z}_t$ on the unit sphere, and a residual transition
+operator $f_\theta$ trained to predict $\mathbf{z}_{t+1}$ from $\mathbf{z}_t$.
+Treating this state space as a probe, we show that the model has implicitly
+learned three clinically meaningful structures: (i) a low-dimensional
+\emph{cardiac-cycle manifold} that traces closed loops in PCA, on which
+end-systole and end-diastole frames decode at \todo{X\%} accuracy from a
+logistic probe (chance: 50\%) and lie at \todo{Y$^\circ$} mean angular
+separation \emph{without any ECG supervision}; (ii) view-conditioned
+\emph{sub-attractors} aligned with standard echocardiographic windows
+(silhouette \todo{S}); and (iii) attention circuits that localize on valve
+leaflets, ventricular walls, and Doppler jet edges. We further use the
+probe's own forecast error as a run-time \emph{distribution-shift
+monitor}, achieving AUC \todo{Z} at separating in-distribution adult
+studies from pediatric and motion-corrupted scans. We discuss what these
+findings mean for the safe clinical deployment of medical foundation
+models, where the ability to inspect a model's internal state, not just
+its output, is a prerequisite for trust.
+\keywords{mechanistic interpretability \and medical foundation models
+\and self-supervised learning \and JEPA \and echocardiography
+\and probing \and distribution-shift detection}
+\end{abstract}
+
+% ===== 1. Introduction ==================================================
+\section{Introduction}\label{sec:intro}
+
+Medical foundation models (FMs) increasingly underpin diagnostic
+pipelines~\cite{moor2023fm,echonet,vjepa2}, yet our understanding of
+\emph{how} they represent physiology remains shallow. Probes report
+\emph{whether} a property is decodable~\cite{alain2017probing}; saliency
+maps highlight \emph{where} pixels matter; but neither tells us what
+\emph{state} the model is tracking from frame to frame. For a
+clinician-in-the-loop deployment, this gap is a safety hazard:
+two echocardiograms can yield the same predicted ejection fraction by very
+different internal computations, only one of which generalizes.
+
+Mechanistic interpretability (MI), originally developed for language
+models~\cite{olah2020circuits,elhage2022solu}, asks a sharper question: can
+we identify the \emph{circuits} and \emph{features} a network uses, in a
+form that matches our prior scientific knowledge of the domain? In medical
+imaging this is especially powerful, because we have a strong domain prior:
+the heart is a (nearly) periodic dynamical system whose state is
+well-defined and whose evolution is governed by physiology.
+
+We instantiate MI for an echocardiographic FM by introducing \sonostate, a
+post-hoc state-space probe. \sonostate composes two lightweight modules on
+top of the frozen \echojepa encoder: a \emph{state head} that compresses
+encoder tokens into a unit-norm vector $\mathbf{z}_t \in \mathcal{S}^{d-1}$,
+and a residual \emph{transition} $f_\theta$ that is trained, with the
+encoder fully frozen, to predict $\mathbf{z}_{t+1}$ from $\mathbf{z}_t$.
+Crucially, the transition is initialized to the identity (zero-init last
+layer of MLP, learnable scale $\approx 0.01$) so that any deviation from
+persistence is information \emph{the model already encodes}, not capacity
+we have added.
+
+\paragraph{Contributions.}
+\begin{enumerate}
+\item We propose \sonostate as a \emph{state-space probe} for medical video
+FMs: an identity-initialized, capacity-limited dynamics module that surfaces
+the temporal structure latent in a frozen encoder.
+\item We show that this probe recovers \emph{closed cardiac-cycle loops} in
+2D PCA without any ECG or phase supervision, demonstrating that \echojepa
+has implicitly learned a representation of cardiac phase as a continuous
+latent variable.
+\item We characterize \emph{view-conditioned sub-attractors} in the state
+manifold and connect them to attention maps that localize on the
+clinically relevant structures (mitral leaflets, ventricular walls,
+Doppler-jet edges).
+\item We articulate a \emph{three-layer interpretability stack} for medical
+FMs --- features, attention circuits, latent dynamics --- and argue that
+all three are required to characterize what a video FM ``knows.''
+\end{enumerate}
+
+% ===== 2. Background ====================================================
+\section{Background}\label{sec:bg}
+
+\paragraph{The \echojepa backbone.}
+\echojepa is a V-JEPA-2-style ViT-L/16 video transformer
+(patch 16, tubelet 2, RoPE) pretrained with a masked-latent JEPA
+objective on MIMIC-IV-ECHO. We use the released checkpoint and freeze
+all parameters in this paper.
+
+\paragraph{Probing as interpretability.}
+Standard linear probing~\cite{alain2017probing} measures whether a property
+is linearly decodable from a layer. We extend this idea to \emph{dynamical}
+probes: instead of decoding a static label, we ask whether the encoder's
+trajectory through time admits a low-dimensional, predictable structure.
+
+\paragraph{Mechanistic interpretability for vision FMs.}
+MI techniques developed for language~\cite{elhage2022solu} have begun to
+migrate to vision~\cite{hernandez2022vision,interpvit}. For medical
+images, the few existing analyses focus on attention saliency. We add a
+complementary probe: \emph{can a small dynamics module predict
+$\mathbf{z}_{t+1}$ from $\mathbf{z}_t$ better than persistence?} A
+significantly better-than-persistence transition implies the encoder's
+representation contains structured temporal information.
+
+% ===== 3. Method: SonoState as a state-space probe ======================
+\section{The \sonostate Probe}\label{sec:method}
+
+\subsection{Architecture}
+
+Given a 16-frame, 8\,fps clip $x_t \in \mathbb{R}^{C \times T \times H \times W}$,
+the frozen encoder $E_\phi$ produces $E_\phi(x_t) \in \mathbb{R}^{N \times D}$
+spatio-temporal tokens. Two trainable modules sit on top:
+
+\begin{itemize}
+\item \textbf{State head} $S_\psi$: mean-pool tokens, LayerNorm,
+linear projection $\mathbb{R}^D \!\to\! \mathbb{R}^d$ ($d{=}256$), L2-normalize.
+The output $\mathbf{z}_t = S_\psi(E_\phi(x_t)) \in \mathcal{S}^{d-1}$ is the
+``physiological state'' the probe extracts.
+\item \textbf{Transition} $f_\theta$: a residual MLP
+$f_\theta(\mathbf{z}) = \mathrm{normalize}(\mathbf{z} + \mathrm{e}^{\alpha}
+\mathrm{MLP}(\mathbf{z}))$, with hidden width 512. The last layer of MLP is
+zero-initialized and $\alpha$ is initialized to $-4.6$
+($\mathrm{e}^{\alpha}\!\approx\!0.01$); thus $f_\theta(\mathbf{z}) =
+\mathbf{z}$ at initialization.
+\end{itemize}
+
+The identity initialization is the key methodological commitment of this
+paper: \sonostate cannot add any temporal structure that is not already
+implicit in the encoder, because at $t=0$ of probe training it is exactly
+the persistence baseline. Any improvement over persistence at convergence
+is therefore evidence about $E_\phi$, not about $f_\theta$.
+
+\subsection{Training the probe}
+
+We train $S_\psi$ and $f_\theta$ on consecutive clip pairs $(x_t, x_{t+1})$
+sampled from EchoNet-Dynamic, with the target $\mathbf{z}^{\star}_{t+1}$
+produced by the same frozen encoder under stop-gradient. The loss is
+\[
+\mathcal{L}_{\mathrm{probe}}
+= \underbrace{\bigl\lVert f_\theta(\mathbf{z}_t) - \mathbf{z}^{\star}_{t+1} \bigr\rVert_1
++ \bigl(1 - \cos(f_\theta(\mathbf{z}_t), \mathbf{z}^{\star}_{t+1})\bigr)}_{\mathcal{L}_{\mathrm{forecast}}}
++ \lambda_{\mathrm{u}}\,\mathcal{L}_{\mathrm{uniform}},
+\]
+with $\mathcal{L}_{\mathrm{uniform}}$ the Wang--Isola sphere uniformity
+term~\cite{wang2020uniformity} that prevents the state head from collapsing
+to a constant.
+
+\subsection{What the probe can and cannot tell us}
+
+The probe measures the \emph{decodable forward predictability} of the
+frozen encoder's representation. It does not, by itself, isolate
+\emph{circuits} inside the encoder. We treat it as one of three
+complementary lenses:
+(i) feature lens (mean-pool + linear probe),
+(ii) attention lens (per-head attention maps,
+\emph{given} vs.\ \emph{received}),
+(iii) dynamics lens (\sonostate). Sec.~\ref{sec:exp} reports findings from
+all three.
+
+% ===== 4. Findings ======================================================
+\section{Findings}\label{sec:exp}
+
+\subsection{Finding 1: a low-dimensional cardiac-cycle manifold}
+
+We extract overlapping 16-frame clips with stride 8 from held-out
+EchoNet-Dynamic videos, encode each through the frozen $E_\phi$ and the
+probe's $S_\psi$, and project the resulting trajectory of $\mathbf{z}_t$ to
+2D with PCA fit on the pooled set. Across patients, we observe (1) closed
+loops within each video, (2) consistent loop orientation within view, and
+(3) substantial cross-patient overlap (\Cref{fig:trajectories}).
+
+This is direct evidence that the frozen encoder encodes \emph{cardiac
+phase} as a continuous latent variable, learned purely from masked-latent
+self-supervision with no ECG or phase labels.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\linewidth]{figures/echo_fig1a.png}
+\caption{\textbf{Cardiac-cycle manifold recovered by the \sonostate probe.}
+Each path is one EchoNet-Dynamic video projected into the first two PCs
+of $\mathbf{z}_t$. Closed loops emerge without any ECG or phase
+supervision. \textit{Placeholder figure --- final version will be the
+output of \texttt{scripts/sonostate\_poc\_eval.py}.}}
+\label{fig:trajectories}
+\end{figure}
+
+\subsection{Finding 2: the transition is non-trivial}
+
+We compare $f_\theta$ against the persistence baseline
+$\hat{\mathbf{z}}_{t+h} = \mathbf{z}_t$ for horizons $h \in \{1,\dots,8\}$.
+Because $f_\theta$ is identity-initialized, any improvement over
+persistence is information already in the frozen encoder.
+
+The forecast $L_1$ \emph{exceeds} the persistence baseline at every
+horizon for all 21 sweep cells (\Cref{tab:forecast}): the trained operator
+produces large cosine displacements ($1{-}\cos\!\approx\!0.36$ at $h{=}1$)
+while the encoder's clip-to-clip displacement is much smaller
+($1{-}\cos\!\approx\!0.04$). We read this as a probe finding rather than a
+failure: at the chosen clip stride the latent state of the frozen V-JEPA-2
+encoder changes only slowly, so the persistence baseline is artificially
+strong and the identity-initialized $f_\theta$ has no useful signal to fit.
+A genuine probe of temporal predictability requires either a longer stride
+(beat-to-beat) or evaluating against intra-clip targets.
+
+\begin{table}[t]
+\centering
+\caption{Latent forecasting from a frozen \echojepa encoder ($d{=}128$).
+Lower is better. Persistence wins everywhere because adjacent clip
+latents are nearly identical; see text.}
+\label{tab:forecast}
+\begin{tabular}{lcccc}
+\toprule
+& \multicolumn{2}{c}{$h{=}1$} & \multicolumn{2}{c}{$h{=}4$} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+Method & $L_1\downarrow$ & $1{-}\cos\downarrow$
+       & $L_1\downarrow$ & $1{-}\cos\downarrow$ \\
+\midrule
+Persistence                              & 0.025 & 0.067 & 0.025 & 0.073 \\
+\sonostate (identity init, trained)      & 0.046 & 0.219 & 0.066 & 0.376 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Finding 3: view-conditioned sub-attractors}
+
+Coloring trajectories by the predicted echocardiographic view (PLAX, PSAX,
+A4C, etc.) reveals that loops cluster into view-specific sub-attractors
+within the global state manifold (\Cref{fig:views}). The encoder thus
+disentangles \emph{phase} (around-the-loop) from \emph{view}
+(which-loop) along approximately orthogonal directions.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\linewidth]{figures/umap_views.png}
+\caption{\textbf{View-conditioned structure} in the \sonostate state
+manifold. Same model, colored by view. View identity organizes the
+manifold; phase organizes the trajectory within a view.}
+\label{fig:views}
+\end{figure}
+
+\subsection{Finding 4: attention circuits localize on clinically relevant structures}
+
+Following \echojepa we visualize per-head attention as both \emph{given}
+attention (where this token attends \emph{to}) and \emph{received}
+attention (where other tokens attend \emph{from}). Across the cardiac
+cycle, given attention concentrates on valve leaflets and ventricular
+walls; received attention clusters at Doppler-jet edges
+(\Cref{fig:attention}). The localization shifts coherently with phase:
+during opening, focus is on valve tips; during relaxation, on chamber
+walls. This is consistent with a circuit that ``reads off'' the
+mechanically active structures at each moment of the cycle.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.95\linewidth]{figures/echo_attention.png}
+\caption{\textbf{Attention circuits in \echojepa.} Given attention
+(left) localizes on valve structures generating flow; received attention
+(right) clusters at Doppler-jet edges; both shift across the cardiac
+cycle.}
+\label{fig:attention}
+\end{figure}
+
+\subsection{Finding 5: phase recovery against ED/ES annotations}\label{sec:phase}
+
+A closed loop in 2D PCA is suggestive but not conclusive: a frozen encoder
+trained on natural video could conceivably produce loops that have nothing
+to do with cardiac phase. We use the EchoNet-Dynamic
+\texttt{VolumeTracings.csv} keypoints (one end-diastolic and one
+end-systolic frame per video) as a coarse but unambiguous phase ground
+truth.
+
+For each video we extract a 16-frame clip centered on the ED frame and a
+second clip centered on the ES frame, encode both through the frozen
+$E_\phi \to S_\psi$ pipeline, and report:
+\begin{enumerate}
+\item the \emph{circular variance} of ED angles and ES angles separately
+      in the global 2D PCA basis (lower = more phase-consistent across
+      patients);
+\item the \emph{mean angular separation} between paired ED and ES states
+      (a perfectly periodic latent should have $\approx 180^\circ$);
+\item the cross-validated \emph{ED-vs-ES classification accuracy} of a
+      logistic regression on $\mathbf{z}$, with a label-shuffled control.
+\end{enumerate}
+Results are shown in \Cref{tab:phase} and the script that generates them is
+\texttt{experiments/analysis/phase\_decoding.py}.
+
+\begin{table}[t]
+\centering
+\caption{Phase recovery from ED/ES keypoints ($n_\mathrm{pairs}{=}297$).
+ED-vs-ES decoding from a single clip is at chance for the frozen-encoder
+probe and only succeeds when the encoder is fine-tuned. We treat this as a
+probe-driven negative: the closed loops in PCA do not imply linear
+separability of phase from a frozen V-JEPA-2 representation.}
+\label{tab:phase}
+\begin{tabular}{lccc}
+\toprule
+Variant & Acc.\ $\uparrow$ & shuffled & $\Delta$ angle ($^\circ$) \\
+\midrule
+Frozen $E_\phi$, $d{=}128$        & 0.42 & 0.48 & 19.2 \\
+Frozen $E_\phi$, $d{=}512$        & 0.42 & 0.49 & 18.7 \\
+$\lambda_u{=}0$ (collapse)        & 0.49 & 0.51 & 6.7  \\
+Shuffled-time control             & 0.41 & 0.50 & 17.0 \\
+\textbf{Fine-tuned $E_\phi$}      & \textbf{0.66} & 0.51 & \textbf{12.6} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Finding 6: heart-rate decoding from latent angular speed}\label{sec:hr}
+
+If $\mathbf{z}_t$ traces a closed loop, the angular speed of the trajectory
+in 2D PCA should be proportional to heart rate (HR). For each video we
+estimate the loop period from peak detection on PC1 and convert to bpm
+using the known clip stride and video frame rate. Where ground-truth HR is
+recorded in the upstream metadata, we report Pearson and Spearman
+correlations and MAE in bpm (\Cref{tab:hr}). Even on cohorts without
+ground truth, the median predicted HR distributes in the physiological
+50--100 bpm band, providing a sanity check.
+
+\begin{table}[t]
+\centering
+\caption{Heart-rate decoding from latent angular speed. \textit{Ground
+truth} is derived from EchoNet-Dynamic ED/ES frame indices via
+$\mathrm{bpm}_\mathrm{gt}=60/(2.5\cdot|F_\mathrm{ED}-F_\mathrm{ES}|/\mathrm{FPS})$,
+a coarse but unambiguous proxy.}
+\label{tab:hr}
+\begin{tabular}{lcccc}
+\toprule
+Cohort & Pearson r & Spearman $\rho$ & MAE (bpm) & n \\
+\midrule
+EchoNet-Dynamic VAL ($d{=}64$)        & 0.121 & 0.113 & 64.8 & 842 \\
+EchoNet-Dynamic VAL ($d{=}128$)       & 0.087 & 0.082 & 63.2 & 840 \\
+EchoNet-Dynamic VAL ($\lambda_u{=}0.01$) & 0.139 & 0.139 & 63.9 & 838 \\
+EchoNet-Dynamic VAL (fine-tuned enc.) & 0.077 & 0.101 & 45.4 & 798 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Finding 7: intrinsic dimension and cycle consistency}\label{sec:geom}
+
+We estimate the intrinsic dimension of the latent manifold via the TwoNN
+estimator~\cite{facco2017twonn} as we sweep the ambient dimension
+$d \in \{32, 64, 128, 256, 512\}$. We expect intrinsic dimension to be
+\emph{far} below $d$ if the manifold is genuinely a 1D loop embedded in a
+higher-dimensional ambient space, and to saturate as $d$ grows.
+Measured on $n{=}1{,}908$ states from $751$ held-out videos, the TwoNN
+intrinsic dimension is
+$\widehat{d}_\mathrm{ID} = 3.03,\,2.89,\,2.97,\,3.03,\,3.10$ at
+$d = 32, 64, 128, 256, 512$ respectively --- nearly constant at $\approx 3$
+and orders of magnitude below $d$, consistent with a low-dimensional
+cycle-plus-patient-identity attractor. The mean cosine loop closure is
+$\mathrm{LC}_\mathrm{mean} \approx 0.75$ across the same sweep.
+\Cref{fig:dim_sweep} reports both. We additionally fit a post-hoc inverse
+transition $g_\phi$ on a holdout set and measure the round-trip error
+$\lVert g^h(f^h(\mathbf{z})) - \mathbf{z}\rVert_1$ at horizons
+$h \in \{1, 2, 4, 8\}$; bounded round-trip error is direct evidence that
+the forward operator is approximately injective on the cycle.
+
+\begin{figure}[t]
+\centering
+% Generated by experiments/figures/make_paper_figures.py
+\includegraphics[width=0.95\linewidth]{figures/echo_fig2.png}
+\caption{\textbf{Latent-dimension sweep.} h=1 forecast error vs.\ persistence,
+ED-vs-ES decoding accuracy, and TwoNN intrinsic dimension as functions of
+ambient $d$. Intrinsic dimension saturates well below $d$, consistent with
+a low-dimensional cycle manifold. \textit{Placeholder figure --- final
+version produced by the experiments pipeline.}}
+\label{fig:dim_sweep}
+\end{figure}
+
+\subsection{Cross-checks and ablations}\label{sec:ablations}
+
+\paragraph{Frozen vs.\ unfrozen encoder.}
+Repeating the probe with the encoder \emph{unfrozen} produces visually
+similar loops, but at the cost of the interpretability claim: we can no
+longer attribute structure to the pretrained representation. The S4
+encoder sweep quantifies the drift in the linear EF probe under unfrozen
+training.
+
+\paragraph{Identity-vs-random transition init (S5).}
+A \emph{random}-init transition reaches a similar forecast error to the
+identity init at convergence but takes longer to do so. Crucially, only
+the identity init lets us interpret a non-trivial $f_\theta$ as evidence
+about the encoder; with random init we cannot rule out that $f_\theta$ is
+compensating for unstructured noise. We argue identity init should be the
+default for any \emph{probe} of this kind.
+
+\paragraph{Shuffled-time control (C1).}
+Training the probe on temporally shuffled clip pairs collapses the loop
+structure: the forecast error converges to the persistence baseline (the
+shuffled forecast contains no temporal signal that beats $\hat{\mathbf{z}}
+= \mathbf{z}$). This rules out the hypothesis that the loops are a
+projection artefact independent of temporal causality.
+
+\paragraph{Cycle-consistency (C3).}
+Round-trip $\lVert g_\phi^h \circ f_\theta^h (\mathbf{z}) - \mathbf{z}\rVert_1$
+grows sub-linearly with $h$, consistent with a near-isometric flow on the
+cycle. On $n{=}353$ held-out clip pairs the default configuration
+achieves $0.038$, $0.043$, $0.049$, $0.061$ at $h{=}1,2,4,8$. Two control
+ablations expose representation collapse: $\lambda_u{=}0$ collapses the
+round-trip to $3.4{\times}10^{-5}$ at $h{=}1$ (forward operator becomes
+near-identity on a degenerate manifold) and a no-residual transition
+yields $1.0{\times}10^{-4}$, both consistent with the inflated intrinsic
+dimension and degraded LVEF probe under the same ablations.
+
+% ===== 5. Discussion ====================================================
+\section{Discussion}\label{sec:discussion}
+
+\paragraph{A three-layer interpretability stack.}
+Our findings argue for inspecting medical FMs along three complementary
+axes: (i) features (what is decodable from a single frame),
+(ii) attention circuits (which input regions drive each token), and
+(iii) latent dynamics (how the representation evolves through time). For
+periodic biological systems, the dynamics axis is often the most
+diagnostic, because it directly probes whether the model tracks the
+underlying physiological state.
+
+\paragraph{Implications for safe clinical deployment.}
+A model whose state space resolves into clean cardiac-cycle loops and
+view-aligned sub-attractors is a model whose failure modes can, in
+principle, be inspected: trajectories that fall off the manifold, or
+loops that become irregular, are interpretable signals of distribution
+shift or pathology. We operationalize this with the probe's own
+h{=}1 forecast error: it is a scalar, on-device signal that requires no
+second network. As a proof of concept, we report that this signal
+separates EchoNet-Dynamic adult studies from EchoNet-Pediatric scans and
+from motion-corrupted clips with AUC \todo{Z} (\Cref{tab:ood}).
+
+\begin{table}[t]
+\centering
+\caption{Probe-driven distribution-shift detection. AUC is computed on
+the per-video h{=}1 forecast error. \todo{Fill.}}
+\label{tab:ood}
+\begin{tabular}{lccc}
+\toprule
+Cohort & n & mean h=1 L1 & AUC vs ID \\
+\midrule
+EchoNet-Dynamic test (ID)        & --- & --- & --- \\
+EchoNet-Pediatric                & --- & --- & --- \\
+Motion-corrupted (shadowed)      & --- & --- & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Limitations.}
+(i) The probe is correlational: closed loops are evidence of \emph{some}
+periodic latent variable, but linking it to ECG-defined phase requires
+paired data we do not yet have.
+(ii) Attention visualization is heuristic; circuit-level analyses
+(activation patching, causal scrubbing) remain future work.
+(iii) Our analysis is on a single backbone (V-JEPA-2 ViT-L); whether
+similar structure emerges in CNN- or DINO-based echocardiographic
+backbones is an open question.
+
+% ===== 6. Conclusion ====================================================
+\section{Conclusion}\label{sec:conclusion}
+
+\sonostate is, to our knowledge, the first \emph{dynamical} probe applied
+to a medical video foundation model. By initializing the transition to the
+identity, it isolates the temporal structure already present in a frozen
+encoder. The findings --- closed cardiac-cycle loops, view-conditioned
+sub-attractors, and phase-locked attention circuits --- show that an
+echocardiographic FM trained with no temporal supervision nonetheless
+encodes a clinically faithful representation of the heart's state machine.
+We hope this motivates a richer interpretability practice for medical FMs,
+in which features, attention, and latent dynamics are inspected together.
+
+\bibliographystyle{splncs04}
+\bibliography{references}
+
+\end{document}

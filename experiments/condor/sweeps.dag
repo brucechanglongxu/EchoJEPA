@@ -1,0 +1,444 @@
+# Auto-generated DAG. Cells: 21, analyses per cell: 6
+
+CONFIG_FILE_DAGMAN_USE_DIRECT_SUBMIT = True
+
+JOB train_S1_dim_d32 experiments/condor/sonostate_train.sub
+VARS train_S1_dim_d32 CONFIG="experiments/configs/_generated/S1_dim/d32.yaml"
+JOB ana_forecast_curves_S1_dim_d32 experiments/condor/sonostate_analysis.sub
+VARS ana_forecast_curves_S1_dim_d32 SCRIPT="forecast_curves" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d32/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d32/analysis_forecast_curves" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S1_dim_d32 CHILD ana_forecast_curves_S1_dim_d32
+JOB ana_phase_decoding_S1_dim_d32 experiments/condor/sonostate_analysis.sub
+VARS ana_phase_decoding_S1_dim_d32 SCRIPT="phase_decoding" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d32/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d32/analysis_phase_decoding" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --vt-csv /scratch/bxu/project/echonet/VolumeTracings.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S1_dim_d32 CHILD ana_phase_decoding_S1_dim_d32
+JOB ana_heart_rate_S1_dim_d32 experiments/condor/sonostate_analysis.sub
+VARS ana_heart_rate_S1_dim_d32 SCRIPT="heart_rate" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d32/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d32/analysis_heart_rate" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S1_dim_d32 CHILD ana_heart_rate_S1_dim_d32
+JOB ana_geometry_S1_dim_d32 experiments/condor/sonostate_analysis.sub
+VARS ana_geometry_S1_dim_d32 SCRIPT="geometry" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d32/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d32/analysis_geometry" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S1_dim_d32 CHILD ana_geometry_S1_dim_d32
+JOB ana_ef_probe_S1_dim_d32 experiments/condor/sonostate_analysis.sub
+VARS ana_ef_probe_S1_dim_d32 SCRIPT="ef_probe" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d32/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d32/analysis_ef_probe" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos --target EF"
+PARENT train_S1_dim_d32 CHILD ana_ef_probe_S1_dim_d32
+JOB ana_cycle_consistency_S1_dim_d32 experiments/condor/sonostate_analysis.sub
+VARS ana_cycle_consistency_S1_dim_d32 SCRIPT="cycle_consistency" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d32/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d32/analysis_cycle_consistency" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S1_dim_d32 CHILD ana_cycle_consistency_S1_dim_d32
+
+JOB train_S1_dim_d64 experiments/condor/sonostate_train.sub
+VARS train_S1_dim_d64 CONFIG="experiments/configs/_generated/S1_dim/d64.yaml"
+JOB ana_forecast_curves_S1_dim_d64 experiments/condor/sonostate_analysis.sub
+VARS ana_forecast_curves_S1_dim_d64 SCRIPT="forecast_curves" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d64/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d64/analysis_forecast_curves" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S1_dim_d64 CHILD ana_forecast_curves_S1_dim_d64
+JOB ana_phase_decoding_S1_dim_d64 experiments/condor/sonostate_analysis.sub
+VARS ana_phase_decoding_S1_dim_d64 SCRIPT="phase_decoding" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d64/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d64/analysis_phase_decoding" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --vt-csv /scratch/bxu/project/echonet/VolumeTracings.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S1_dim_d64 CHILD ana_phase_decoding_S1_dim_d64
+JOB ana_heart_rate_S1_dim_d64 experiments/condor/sonostate_analysis.sub
+VARS ana_heart_rate_S1_dim_d64 SCRIPT="heart_rate" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d64/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d64/analysis_heart_rate" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S1_dim_d64 CHILD ana_heart_rate_S1_dim_d64
+JOB ana_geometry_S1_dim_d64 experiments/condor/sonostate_analysis.sub
+VARS ana_geometry_S1_dim_d64 SCRIPT="geometry" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d64/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d64/analysis_geometry" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S1_dim_d64 CHILD ana_geometry_S1_dim_d64
+JOB ana_ef_probe_S1_dim_d64 experiments/condor/sonostate_analysis.sub
+VARS ana_ef_probe_S1_dim_d64 SCRIPT="ef_probe" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d64/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d64/analysis_ef_probe" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos --target EF"
+PARENT train_S1_dim_d64 CHILD ana_ef_probe_S1_dim_d64
+JOB ana_cycle_consistency_S1_dim_d64 experiments/condor/sonostate_analysis.sub
+VARS ana_cycle_consistency_S1_dim_d64 SCRIPT="cycle_consistency" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d64/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d64/analysis_cycle_consistency" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S1_dim_d64 CHILD ana_cycle_consistency_S1_dim_d64
+
+JOB train_S1_dim_d128 experiments/condor/sonostate_train.sub
+VARS train_S1_dim_d128 CONFIG="experiments/configs/_generated/S1_dim/d128.yaml"
+JOB ana_forecast_curves_S1_dim_d128 experiments/condor/sonostate_analysis.sub
+VARS ana_forecast_curves_S1_dim_d128 SCRIPT="forecast_curves" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d128/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d128/analysis_forecast_curves" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S1_dim_d128 CHILD ana_forecast_curves_S1_dim_d128
+JOB ana_phase_decoding_S1_dim_d128 experiments/condor/sonostate_analysis.sub
+VARS ana_phase_decoding_S1_dim_d128 SCRIPT="phase_decoding" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d128/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d128/analysis_phase_decoding" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --vt-csv /scratch/bxu/project/echonet/VolumeTracings.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S1_dim_d128 CHILD ana_phase_decoding_S1_dim_d128
+JOB ana_heart_rate_S1_dim_d128 experiments/condor/sonostate_analysis.sub
+VARS ana_heart_rate_S1_dim_d128 SCRIPT="heart_rate" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d128/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d128/analysis_heart_rate" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S1_dim_d128 CHILD ana_heart_rate_S1_dim_d128
+JOB ana_geometry_S1_dim_d128 experiments/condor/sonostate_analysis.sub
+VARS ana_geometry_S1_dim_d128 SCRIPT="geometry" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d128/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d128/analysis_geometry" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S1_dim_d128 CHILD ana_geometry_S1_dim_d128
+JOB ana_ef_probe_S1_dim_d128 experiments/condor/sonostate_analysis.sub
+VARS ana_ef_probe_S1_dim_d128 SCRIPT="ef_probe" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d128/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d128/analysis_ef_probe" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos --target EF"
+PARENT train_S1_dim_d128 CHILD ana_ef_probe_S1_dim_d128
+JOB ana_cycle_consistency_S1_dim_d128 experiments/condor/sonostate_analysis.sub
+VARS ana_cycle_consistency_S1_dim_d128 SCRIPT="cycle_consistency" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d128/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d128/analysis_cycle_consistency" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S1_dim_d128 CHILD ana_cycle_consistency_S1_dim_d128
+
+JOB train_S1_dim_d256 experiments/condor/sonostate_train.sub
+VARS train_S1_dim_d256 CONFIG="experiments/configs/_generated/S1_dim/d256.yaml"
+JOB ana_forecast_curves_S1_dim_d256 experiments/condor/sonostate_analysis.sub
+VARS ana_forecast_curves_S1_dim_d256 SCRIPT="forecast_curves" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d256/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d256/analysis_forecast_curves" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S1_dim_d256 CHILD ana_forecast_curves_S1_dim_d256
+JOB ana_phase_decoding_S1_dim_d256 experiments/condor/sonostate_analysis.sub
+VARS ana_phase_decoding_S1_dim_d256 SCRIPT="phase_decoding" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d256/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d256/analysis_phase_decoding" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --vt-csv /scratch/bxu/project/echonet/VolumeTracings.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S1_dim_d256 CHILD ana_phase_decoding_S1_dim_d256
+JOB ana_heart_rate_S1_dim_d256 experiments/condor/sonostate_analysis.sub
+VARS ana_heart_rate_S1_dim_d256 SCRIPT="heart_rate" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d256/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d256/analysis_heart_rate" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S1_dim_d256 CHILD ana_heart_rate_S1_dim_d256
+JOB ana_geometry_S1_dim_d256 experiments/condor/sonostate_analysis.sub
+VARS ana_geometry_S1_dim_d256 SCRIPT="geometry" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d256/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d256/analysis_geometry" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S1_dim_d256 CHILD ana_geometry_S1_dim_d256
+JOB ana_ef_probe_S1_dim_d256 experiments/condor/sonostate_analysis.sub
+VARS ana_ef_probe_S1_dim_d256 SCRIPT="ef_probe" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d256/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d256/analysis_ef_probe" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos --target EF"
+PARENT train_S1_dim_d256 CHILD ana_ef_probe_S1_dim_d256
+JOB ana_cycle_consistency_S1_dim_d256 experiments/condor/sonostate_analysis.sub
+VARS ana_cycle_consistency_S1_dim_d256 SCRIPT="cycle_consistency" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d256/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d256/analysis_cycle_consistency" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S1_dim_d256 CHILD ana_cycle_consistency_S1_dim_d256
+
+JOB train_S1_dim_d512 experiments/condor/sonostate_train.sub
+VARS train_S1_dim_d512 CONFIG="experiments/configs/_generated/S1_dim/d512.yaml"
+JOB ana_forecast_curves_S1_dim_d512 experiments/condor/sonostate_analysis.sub
+VARS ana_forecast_curves_S1_dim_d512 SCRIPT="forecast_curves" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d512/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d512/analysis_forecast_curves" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S1_dim_d512 CHILD ana_forecast_curves_S1_dim_d512
+JOB ana_phase_decoding_S1_dim_d512 experiments/condor/sonostate_analysis.sub
+VARS ana_phase_decoding_S1_dim_d512 SCRIPT="phase_decoding" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d512/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d512/analysis_phase_decoding" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --vt-csv /scratch/bxu/project/echonet/VolumeTracings.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S1_dim_d512 CHILD ana_phase_decoding_S1_dim_d512
+JOB ana_heart_rate_S1_dim_d512 experiments/condor/sonostate_analysis.sub
+VARS ana_heart_rate_S1_dim_d512 SCRIPT="heart_rate" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d512/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d512/analysis_heart_rate" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S1_dim_d512 CHILD ana_heart_rate_S1_dim_d512
+JOB ana_geometry_S1_dim_d512 experiments/condor/sonostate_analysis.sub
+VARS ana_geometry_S1_dim_d512 SCRIPT="geometry" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d512/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d512/analysis_geometry" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S1_dim_d512 CHILD ana_geometry_S1_dim_d512
+JOB ana_ef_probe_S1_dim_d512 experiments/condor/sonostate_analysis.sub
+VARS ana_ef_probe_S1_dim_d512 SCRIPT="ef_probe" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d512/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d512/analysis_ef_probe" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos --target EF"
+PARENT train_S1_dim_d512 CHILD ana_ef_probe_S1_dim_d512
+JOB ana_cycle_consistency_S1_dim_d512 experiments/condor/sonostate_analysis.sub
+VARS ana_cycle_consistency_S1_dim_d512 SCRIPT="cycle_consistency" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d512/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S1_dim/d512/analysis_cycle_consistency" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S1_dim_d512 CHILD ana_cycle_consistency_S1_dim_d512
+
+JOB train_S2_lambda_u_u0000 experiments/condor/sonostate_train.sub
+VARS train_S2_lambda_u_u0000 CONFIG="experiments/configs/_generated/S2_lambda_u/u0000.yaml"
+JOB ana_forecast_curves_S2_lambda_u_u0000 experiments/condor/sonostate_analysis.sub
+VARS ana_forecast_curves_S2_lambda_u_u0000 SCRIPT="forecast_curves" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0000/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0000/analysis_forecast_curves" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S2_lambda_u_u0000 CHILD ana_forecast_curves_S2_lambda_u_u0000
+JOB ana_phase_decoding_S2_lambda_u_u0000 experiments/condor/sonostate_analysis.sub
+VARS ana_phase_decoding_S2_lambda_u_u0000 SCRIPT="phase_decoding" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0000/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0000/analysis_phase_decoding" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --vt-csv /scratch/bxu/project/echonet/VolumeTracings.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S2_lambda_u_u0000 CHILD ana_phase_decoding_S2_lambda_u_u0000
+JOB ana_heart_rate_S2_lambda_u_u0000 experiments/condor/sonostate_analysis.sub
+VARS ana_heart_rate_S2_lambda_u_u0000 SCRIPT="heart_rate" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0000/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0000/analysis_heart_rate" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S2_lambda_u_u0000 CHILD ana_heart_rate_S2_lambda_u_u0000
+JOB ana_geometry_S2_lambda_u_u0000 experiments/condor/sonostate_analysis.sub
+VARS ana_geometry_S2_lambda_u_u0000 SCRIPT="geometry" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0000/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0000/analysis_geometry" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S2_lambda_u_u0000 CHILD ana_geometry_S2_lambda_u_u0000
+JOB ana_ef_probe_S2_lambda_u_u0000 experiments/condor/sonostate_analysis.sub
+VARS ana_ef_probe_S2_lambda_u_u0000 SCRIPT="ef_probe" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0000/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0000/analysis_ef_probe" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos --target EF"
+PARENT train_S2_lambda_u_u0000 CHILD ana_ef_probe_S2_lambda_u_u0000
+JOB ana_cycle_consistency_S2_lambda_u_u0000 experiments/condor/sonostate_analysis.sub
+VARS ana_cycle_consistency_S2_lambda_u_u0000 SCRIPT="cycle_consistency" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0000/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0000/analysis_cycle_consistency" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S2_lambda_u_u0000 CHILD ana_cycle_consistency_S2_lambda_u_u0000
+
+JOB train_S2_lambda_u_u0010 experiments/condor/sonostate_train.sub
+VARS train_S2_lambda_u_u0010 CONFIG="experiments/configs/_generated/S2_lambda_u/u0010.yaml"
+JOB ana_forecast_curves_S2_lambda_u_u0010 experiments/condor/sonostate_analysis.sub
+VARS ana_forecast_curves_S2_lambda_u_u0010 SCRIPT="forecast_curves" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0010/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0010/analysis_forecast_curves" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S2_lambda_u_u0010 CHILD ana_forecast_curves_S2_lambda_u_u0010
+JOB ana_phase_decoding_S2_lambda_u_u0010 experiments/condor/sonostate_analysis.sub
+VARS ana_phase_decoding_S2_lambda_u_u0010 SCRIPT="phase_decoding" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0010/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0010/analysis_phase_decoding" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --vt-csv /scratch/bxu/project/echonet/VolumeTracings.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S2_lambda_u_u0010 CHILD ana_phase_decoding_S2_lambda_u_u0010
+JOB ana_heart_rate_S2_lambda_u_u0010 experiments/condor/sonostate_analysis.sub
+VARS ana_heart_rate_S2_lambda_u_u0010 SCRIPT="heart_rate" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0010/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0010/analysis_heart_rate" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S2_lambda_u_u0010 CHILD ana_heart_rate_S2_lambda_u_u0010
+JOB ana_geometry_S2_lambda_u_u0010 experiments/condor/sonostate_analysis.sub
+VARS ana_geometry_S2_lambda_u_u0010 SCRIPT="geometry" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0010/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0010/analysis_geometry" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S2_lambda_u_u0010 CHILD ana_geometry_S2_lambda_u_u0010
+JOB ana_ef_probe_S2_lambda_u_u0010 experiments/condor/sonostate_analysis.sub
+VARS ana_ef_probe_S2_lambda_u_u0010 SCRIPT="ef_probe" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0010/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0010/analysis_ef_probe" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos --target EF"
+PARENT train_S2_lambda_u_u0010 CHILD ana_ef_probe_S2_lambda_u_u0010
+JOB ana_cycle_consistency_S2_lambda_u_u0010 experiments/condor/sonostate_analysis.sub
+VARS ana_cycle_consistency_S2_lambda_u_u0010 SCRIPT="cycle_consistency" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0010/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0010/analysis_cycle_consistency" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S2_lambda_u_u0010 CHILD ana_cycle_consistency_S2_lambda_u_u0010
+
+JOB train_S2_lambda_u_u0100 experiments/condor/sonostate_train.sub
+VARS train_S2_lambda_u_u0100 CONFIG="experiments/configs/_generated/S2_lambda_u/u0100.yaml"
+JOB ana_forecast_curves_S2_lambda_u_u0100 experiments/condor/sonostate_analysis.sub
+VARS ana_forecast_curves_S2_lambda_u_u0100 SCRIPT="forecast_curves" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0100/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0100/analysis_forecast_curves" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S2_lambda_u_u0100 CHILD ana_forecast_curves_S2_lambda_u_u0100
+JOB ana_phase_decoding_S2_lambda_u_u0100 experiments/condor/sonostate_analysis.sub
+VARS ana_phase_decoding_S2_lambda_u_u0100 SCRIPT="phase_decoding" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0100/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0100/analysis_phase_decoding" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --vt-csv /scratch/bxu/project/echonet/VolumeTracings.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S2_lambda_u_u0100 CHILD ana_phase_decoding_S2_lambda_u_u0100
+JOB ana_heart_rate_S2_lambda_u_u0100 experiments/condor/sonostate_analysis.sub
+VARS ana_heart_rate_S2_lambda_u_u0100 SCRIPT="heart_rate" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0100/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0100/analysis_heart_rate" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S2_lambda_u_u0100 CHILD ana_heart_rate_S2_lambda_u_u0100
+JOB ana_geometry_S2_lambda_u_u0100 experiments/condor/sonostate_analysis.sub
+VARS ana_geometry_S2_lambda_u_u0100 SCRIPT="geometry" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0100/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0100/analysis_geometry" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S2_lambda_u_u0100 CHILD ana_geometry_S2_lambda_u_u0100
+JOB ana_ef_probe_S2_lambda_u_u0100 experiments/condor/sonostate_analysis.sub
+VARS ana_ef_probe_S2_lambda_u_u0100 SCRIPT="ef_probe" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0100/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0100/analysis_ef_probe" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos --target EF"
+PARENT train_S2_lambda_u_u0100 CHILD ana_ef_probe_S2_lambda_u_u0100
+JOB ana_cycle_consistency_S2_lambda_u_u0100 experiments/condor/sonostate_analysis.sub
+VARS ana_cycle_consistency_S2_lambda_u_u0100 SCRIPT="cycle_consistency" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0100/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0100/analysis_cycle_consistency" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S2_lambda_u_u0100 CHILD ana_cycle_consistency_S2_lambda_u_u0100
+
+JOB train_S2_lambda_u_u0500 experiments/condor/sonostate_train.sub
+VARS train_S2_lambda_u_u0500 CONFIG="experiments/configs/_generated/S2_lambda_u/u0500.yaml"
+JOB ana_forecast_curves_S2_lambda_u_u0500 experiments/condor/sonostate_analysis.sub
+VARS ana_forecast_curves_S2_lambda_u_u0500 SCRIPT="forecast_curves" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0500/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0500/analysis_forecast_curves" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S2_lambda_u_u0500 CHILD ana_forecast_curves_S2_lambda_u_u0500
+JOB ana_phase_decoding_S2_lambda_u_u0500 experiments/condor/sonostate_analysis.sub
+VARS ana_phase_decoding_S2_lambda_u_u0500 SCRIPT="phase_decoding" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0500/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0500/analysis_phase_decoding" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --vt-csv /scratch/bxu/project/echonet/VolumeTracings.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S2_lambda_u_u0500 CHILD ana_phase_decoding_S2_lambda_u_u0500
+JOB ana_heart_rate_S2_lambda_u_u0500 experiments/condor/sonostate_analysis.sub
+VARS ana_heart_rate_S2_lambda_u_u0500 SCRIPT="heart_rate" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0500/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0500/analysis_heart_rate" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S2_lambda_u_u0500 CHILD ana_heart_rate_S2_lambda_u_u0500
+JOB ana_geometry_S2_lambda_u_u0500 experiments/condor/sonostate_analysis.sub
+VARS ana_geometry_S2_lambda_u_u0500 SCRIPT="geometry" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0500/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0500/analysis_geometry" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S2_lambda_u_u0500 CHILD ana_geometry_S2_lambda_u_u0500
+JOB ana_ef_probe_S2_lambda_u_u0500 experiments/condor/sonostate_analysis.sub
+VARS ana_ef_probe_S2_lambda_u_u0500 SCRIPT="ef_probe" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0500/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0500/analysis_ef_probe" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos --target EF"
+PARENT train_S2_lambda_u_u0500 CHILD ana_ef_probe_S2_lambda_u_u0500
+JOB ana_cycle_consistency_S2_lambda_u_u0500 experiments/condor/sonostate_analysis.sub
+VARS ana_cycle_consistency_S2_lambda_u_u0500 SCRIPT="cycle_consistency" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0500/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S2_lambda_u/u0500/analysis_cycle_consistency" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S2_lambda_u_u0500 CHILD ana_cycle_consistency_S2_lambda_u_u0500
+
+JOB train_S3_forecast_loss_l1 experiments/condor/sonostate_train.sub
+VARS train_S3_forecast_loss_l1 CONFIG="experiments/configs/_generated/S3_forecast_loss/l1.yaml"
+JOB ana_forecast_curves_S3_forecast_loss_l1 experiments/condor/sonostate_analysis.sub
+VARS ana_forecast_curves_S3_forecast_loss_l1 SCRIPT="forecast_curves" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/l1/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/l1/analysis_forecast_curves" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S3_forecast_loss_l1 CHILD ana_forecast_curves_S3_forecast_loss_l1
+JOB ana_phase_decoding_S3_forecast_loss_l1 experiments/condor/sonostate_analysis.sub
+VARS ana_phase_decoding_S3_forecast_loss_l1 SCRIPT="phase_decoding" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/l1/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/l1/analysis_phase_decoding" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --vt-csv /scratch/bxu/project/echonet/VolumeTracings.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S3_forecast_loss_l1 CHILD ana_phase_decoding_S3_forecast_loss_l1
+JOB ana_heart_rate_S3_forecast_loss_l1 experiments/condor/sonostate_analysis.sub
+VARS ana_heart_rate_S3_forecast_loss_l1 SCRIPT="heart_rate" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/l1/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/l1/analysis_heart_rate" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S3_forecast_loss_l1 CHILD ana_heart_rate_S3_forecast_loss_l1
+JOB ana_geometry_S3_forecast_loss_l1 experiments/condor/sonostate_analysis.sub
+VARS ana_geometry_S3_forecast_loss_l1 SCRIPT="geometry" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/l1/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/l1/analysis_geometry" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S3_forecast_loss_l1 CHILD ana_geometry_S3_forecast_loss_l1
+JOB ana_ef_probe_S3_forecast_loss_l1 experiments/condor/sonostate_analysis.sub
+VARS ana_ef_probe_S3_forecast_loss_l1 SCRIPT="ef_probe" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/l1/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/l1/analysis_ef_probe" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos --target EF"
+PARENT train_S3_forecast_loss_l1 CHILD ana_ef_probe_S3_forecast_loss_l1
+JOB ana_cycle_consistency_S3_forecast_loss_l1 experiments/condor/sonostate_analysis.sub
+VARS ana_cycle_consistency_S3_forecast_loss_l1 SCRIPT="cycle_consistency" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/l1/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/l1/analysis_cycle_consistency" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S3_forecast_loss_l1 CHILD ana_cycle_consistency_S3_forecast_loss_l1
+
+JOB train_S3_forecast_loss_cos experiments/condor/sonostate_train.sub
+VARS train_S3_forecast_loss_cos CONFIG="experiments/configs/_generated/S3_forecast_loss/cos.yaml"
+JOB ana_forecast_curves_S3_forecast_loss_cos experiments/condor/sonostate_analysis.sub
+VARS ana_forecast_curves_S3_forecast_loss_cos SCRIPT="forecast_curves" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/cos/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/cos/analysis_forecast_curves" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S3_forecast_loss_cos CHILD ana_forecast_curves_S3_forecast_loss_cos
+JOB ana_phase_decoding_S3_forecast_loss_cos experiments/condor/sonostate_analysis.sub
+VARS ana_phase_decoding_S3_forecast_loss_cos SCRIPT="phase_decoding" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/cos/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/cos/analysis_phase_decoding" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --vt-csv /scratch/bxu/project/echonet/VolumeTracings.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S3_forecast_loss_cos CHILD ana_phase_decoding_S3_forecast_loss_cos
+JOB ana_heart_rate_S3_forecast_loss_cos experiments/condor/sonostate_analysis.sub
+VARS ana_heart_rate_S3_forecast_loss_cos SCRIPT="heart_rate" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/cos/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/cos/analysis_heart_rate" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S3_forecast_loss_cos CHILD ana_heart_rate_S3_forecast_loss_cos
+JOB ana_geometry_S3_forecast_loss_cos experiments/condor/sonostate_analysis.sub
+VARS ana_geometry_S3_forecast_loss_cos SCRIPT="geometry" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/cos/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/cos/analysis_geometry" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S3_forecast_loss_cos CHILD ana_geometry_S3_forecast_loss_cos
+JOB ana_ef_probe_S3_forecast_loss_cos experiments/condor/sonostate_analysis.sub
+VARS ana_ef_probe_S3_forecast_loss_cos SCRIPT="ef_probe" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/cos/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/cos/analysis_ef_probe" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos --target EF"
+PARENT train_S3_forecast_loss_cos CHILD ana_ef_probe_S3_forecast_loss_cos
+JOB ana_cycle_consistency_S3_forecast_loss_cos experiments/condor/sonostate_analysis.sub
+VARS ana_cycle_consistency_S3_forecast_loss_cos SCRIPT="cycle_consistency" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/cos/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/cos/analysis_cycle_consistency" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S3_forecast_loss_cos CHILD ana_cycle_consistency_S3_forecast_loss_cos
+
+JOB train_S3_forecast_loss_l1cos experiments/condor/sonostate_train.sub
+VARS train_S3_forecast_loss_l1cos CONFIG="experiments/configs/_generated/S3_forecast_loss/l1cos.yaml"
+JOB ana_forecast_curves_S3_forecast_loss_l1cos experiments/condor/sonostate_analysis.sub
+VARS ana_forecast_curves_S3_forecast_loss_l1cos SCRIPT="forecast_curves" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/l1cos/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/l1cos/analysis_forecast_curves" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S3_forecast_loss_l1cos CHILD ana_forecast_curves_S3_forecast_loss_l1cos
+JOB ana_phase_decoding_S3_forecast_loss_l1cos experiments/condor/sonostate_analysis.sub
+VARS ana_phase_decoding_S3_forecast_loss_l1cos SCRIPT="phase_decoding" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/l1cos/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/l1cos/analysis_phase_decoding" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --vt-csv /scratch/bxu/project/echonet/VolumeTracings.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S3_forecast_loss_l1cos CHILD ana_phase_decoding_S3_forecast_loss_l1cos
+JOB ana_heart_rate_S3_forecast_loss_l1cos experiments/condor/sonostate_analysis.sub
+VARS ana_heart_rate_S3_forecast_loss_l1cos SCRIPT="heart_rate" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/l1cos/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/l1cos/analysis_heart_rate" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S3_forecast_loss_l1cos CHILD ana_heart_rate_S3_forecast_loss_l1cos
+JOB ana_geometry_S3_forecast_loss_l1cos experiments/condor/sonostate_analysis.sub
+VARS ana_geometry_S3_forecast_loss_l1cos SCRIPT="geometry" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/l1cos/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/l1cos/analysis_geometry" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S3_forecast_loss_l1cos CHILD ana_geometry_S3_forecast_loss_l1cos
+JOB ana_ef_probe_S3_forecast_loss_l1cos experiments/condor/sonostate_analysis.sub
+VARS ana_ef_probe_S3_forecast_loss_l1cos SCRIPT="ef_probe" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/l1cos/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/l1cos/analysis_ef_probe" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos --target EF"
+PARENT train_S3_forecast_loss_l1cos CHILD ana_ef_probe_S3_forecast_loss_l1cos
+JOB ana_cycle_consistency_S3_forecast_loss_l1cos experiments/condor/sonostate_analysis.sub
+VARS ana_cycle_consistency_S3_forecast_loss_l1cos SCRIPT="cycle_consistency" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/l1cos/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S3_forecast_loss/l1cos/analysis_cycle_consistency" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S3_forecast_loss_l1cos CHILD ana_cycle_consistency_S3_forecast_loss_l1cos
+
+JOB train_S4_encoder_frozen experiments/condor/sonostate_train.sub
+VARS train_S4_encoder_frozen CONFIG="experiments/configs/_generated/S4_encoder/frozen.yaml"
+JOB ana_forecast_curves_S4_encoder_frozen experiments/condor/sonostate_analysis.sub
+VARS ana_forecast_curves_S4_encoder_frozen SCRIPT="forecast_curves" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S4_encoder/frozen/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S4_encoder/frozen/analysis_forecast_curves" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S4_encoder_frozen CHILD ana_forecast_curves_S4_encoder_frozen
+JOB ana_phase_decoding_S4_encoder_frozen experiments/condor/sonostate_analysis.sub
+VARS ana_phase_decoding_S4_encoder_frozen SCRIPT="phase_decoding" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S4_encoder/frozen/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S4_encoder/frozen/analysis_phase_decoding" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --vt-csv /scratch/bxu/project/echonet/VolumeTracings.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S4_encoder_frozen CHILD ana_phase_decoding_S4_encoder_frozen
+JOB ana_heart_rate_S4_encoder_frozen experiments/condor/sonostate_analysis.sub
+VARS ana_heart_rate_S4_encoder_frozen SCRIPT="heart_rate" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S4_encoder/frozen/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S4_encoder/frozen/analysis_heart_rate" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S4_encoder_frozen CHILD ana_heart_rate_S4_encoder_frozen
+JOB ana_geometry_S4_encoder_frozen experiments/condor/sonostate_analysis.sub
+VARS ana_geometry_S4_encoder_frozen SCRIPT="geometry" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S4_encoder/frozen/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S4_encoder/frozen/analysis_geometry" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S4_encoder_frozen CHILD ana_geometry_S4_encoder_frozen
+JOB ana_ef_probe_S4_encoder_frozen experiments/condor/sonostate_analysis.sub
+VARS ana_ef_probe_S4_encoder_frozen SCRIPT="ef_probe" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S4_encoder/frozen/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S4_encoder/frozen/analysis_ef_probe" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos --target EF"
+PARENT train_S4_encoder_frozen CHILD ana_ef_probe_S4_encoder_frozen
+JOB ana_cycle_consistency_S4_encoder_frozen experiments/condor/sonostate_analysis.sub
+VARS ana_cycle_consistency_S4_encoder_frozen SCRIPT="cycle_consistency" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S4_encoder/frozen/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S4_encoder/frozen/analysis_cycle_consistency" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S4_encoder_frozen CHILD ana_cycle_consistency_S4_encoder_frozen
+
+JOB train_S4_encoder_ftuned experiments/condor/sonostate_train.sub
+VARS train_S4_encoder_ftuned CONFIG="experiments/configs/_generated/S4_encoder/ftuned.yaml"
+JOB ana_forecast_curves_S4_encoder_ftuned experiments/condor/sonostate_analysis.sub
+VARS ana_forecast_curves_S4_encoder_ftuned SCRIPT="forecast_curves" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S4_encoder/ftuned/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S4_encoder/ftuned/analysis_forecast_curves" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S4_encoder_ftuned CHILD ana_forecast_curves_S4_encoder_ftuned
+JOB ana_phase_decoding_S4_encoder_ftuned experiments/condor/sonostate_analysis.sub
+VARS ana_phase_decoding_S4_encoder_ftuned SCRIPT="phase_decoding" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S4_encoder/ftuned/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S4_encoder/ftuned/analysis_phase_decoding" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --vt-csv /scratch/bxu/project/echonet/VolumeTracings.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S4_encoder_ftuned CHILD ana_phase_decoding_S4_encoder_ftuned
+JOB ana_heart_rate_S4_encoder_ftuned experiments/condor/sonostate_analysis.sub
+VARS ana_heart_rate_S4_encoder_ftuned SCRIPT="heart_rate" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S4_encoder/ftuned/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S4_encoder/ftuned/analysis_heart_rate" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S4_encoder_ftuned CHILD ana_heart_rate_S4_encoder_ftuned
+JOB ana_geometry_S4_encoder_ftuned experiments/condor/sonostate_analysis.sub
+VARS ana_geometry_S4_encoder_ftuned SCRIPT="geometry" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S4_encoder/ftuned/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S4_encoder/ftuned/analysis_geometry" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S4_encoder_ftuned CHILD ana_geometry_S4_encoder_ftuned
+JOB ana_ef_probe_S4_encoder_ftuned experiments/condor/sonostate_analysis.sub
+VARS ana_ef_probe_S4_encoder_ftuned SCRIPT="ef_probe" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S4_encoder/ftuned/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S4_encoder/ftuned/analysis_ef_probe" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos --target EF"
+PARENT train_S4_encoder_ftuned CHILD ana_ef_probe_S4_encoder_ftuned
+JOB ana_cycle_consistency_S4_encoder_ftuned experiments/condor/sonostate_analysis.sub
+VARS ana_cycle_consistency_S4_encoder_ftuned SCRIPT="cycle_consistency" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S4_encoder/ftuned/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S4_encoder/ftuned/analysis_cycle_consistency" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S4_encoder_ftuned CHILD ana_cycle_consistency_S4_encoder_ftuned
+
+JOB train_S5_init_identity experiments/condor/sonostate_train.sub
+VARS train_S5_init_identity CONFIG="experiments/configs/_generated/S5_init/identity.yaml"
+JOB ana_forecast_curves_S5_init_identity experiments/condor/sonostate_analysis.sub
+VARS ana_forecast_curves_S5_init_identity SCRIPT="forecast_curves" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/identity/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/identity/analysis_forecast_curves" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S5_init_identity CHILD ana_forecast_curves_S5_init_identity
+JOB ana_phase_decoding_S5_init_identity experiments/condor/sonostate_analysis.sub
+VARS ana_phase_decoding_S5_init_identity SCRIPT="phase_decoding" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/identity/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/identity/analysis_phase_decoding" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --vt-csv /scratch/bxu/project/echonet/VolumeTracings.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S5_init_identity CHILD ana_phase_decoding_S5_init_identity
+JOB ana_heart_rate_S5_init_identity experiments/condor/sonostate_analysis.sub
+VARS ana_heart_rate_S5_init_identity SCRIPT="heart_rate" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/identity/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/identity/analysis_heart_rate" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S5_init_identity CHILD ana_heart_rate_S5_init_identity
+JOB ana_geometry_S5_init_identity experiments/condor/sonostate_analysis.sub
+VARS ana_geometry_S5_init_identity SCRIPT="geometry" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/identity/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/identity/analysis_geometry" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S5_init_identity CHILD ana_geometry_S5_init_identity
+JOB ana_ef_probe_S5_init_identity experiments/condor/sonostate_analysis.sub
+VARS ana_ef_probe_S5_init_identity SCRIPT="ef_probe" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/identity/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/identity/analysis_ef_probe" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos --target EF"
+PARENT train_S5_init_identity CHILD ana_ef_probe_S5_init_identity
+JOB ana_cycle_consistency_S5_init_identity experiments/condor/sonostate_analysis.sub
+VARS ana_cycle_consistency_S5_init_identity SCRIPT="cycle_consistency" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/identity/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/identity/analysis_cycle_consistency" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S5_init_identity CHILD ana_cycle_consistency_S5_init_identity
+
+JOB train_S5_init_random experiments/condor/sonostate_train.sub
+VARS train_S5_init_random CONFIG="experiments/configs/_generated/S5_init/random.yaml"
+JOB ana_forecast_curves_S5_init_random experiments/condor/sonostate_analysis.sub
+VARS ana_forecast_curves_S5_init_random SCRIPT="forecast_curves" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/random/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/random/analysis_forecast_curves" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S5_init_random CHILD ana_forecast_curves_S5_init_random
+JOB ana_phase_decoding_S5_init_random experiments/condor/sonostate_analysis.sub
+VARS ana_phase_decoding_S5_init_random SCRIPT="phase_decoding" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/random/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/random/analysis_phase_decoding" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --vt-csv /scratch/bxu/project/echonet/VolumeTracings.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S5_init_random CHILD ana_phase_decoding_S5_init_random
+JOB ana_heart_rate_S5_init_random experiments/condor/sonostate_analysis.sub
+VARS ana_heart_rate_S5_init_random SCRIPT="heart_rate" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/random/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/random/analysis_heart_rate" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S5_init_random CHILD ana_heart_rate_S5_init_random
+JOB ana_geometry_S5_init_random experiments/condor/sonostate_analysis.sub
+VARS ana_geometry_S5_init_random SCRIPT="geometry" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/random/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/random/analysis_geometry" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S5_init_random CHILD ana_geometry_S5_init_random
+JOB ana_ef_probe_S5_init_random experiments/condor/sonostate_analysis.sub
+VARS ana_ef_probe_S5_init_random SCRIPT="ef_probe" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/random/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/random/analysis_ef_probe" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos --target EF"
+PARENT train_S5_init_random CHILD ana_ef_probe_S5_init_random
+JOB ana_cycle_consistency_S5_init_random experiments/condor/sonostate_analysis.sub
+VARS ana_cycle_consistency_S5_init_random SCRIPT="cycle_consistency" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/random/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/random/analysis_cycle_consistency" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S5_init_random CHILD ana_cycle_consistency_S5_init_random
+
+JOB train_S5_init_noresidual experiments/condor/sonostate_train.sub
+VARS train_S5_init_noresidual CONFIG="experiments/configs/_generated/S5_init/noresidual.yaml"
+JOB ana_forecast_curves_S5_init_noresidual experiments/condor/sonostate_analysis.sub
+VARS ana_forecast_curves_S5_init_noresidual SCRIPT="forecast_curves" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/noresidual/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/noresidual/analysis_forecast_curves" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S5_init_noresidual CHILD ana_forecast_curves_S5_init_noresidual
+JOB ana_phase_decoding_S5_init_noresidual experiments/condor/sonostate_analysis.sub
+VARS ana_phase_decoding_S5_init_noresidual SCRIPT="phase_decoding" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/noresidual/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/noresidual/analysis_phase_decoding" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --vt-csv /scratch/bxu/project/echonet/VolumeTracings.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S5_init_noresidual CHILD ana_phase_decoding_S5_init_noresidual
+JOB ana_heart_rate_S5_init_noresidual experiments/condor/sonostate_analysis.sub
+VARS ana_heart_rate_S5_init_noresidual SCRIPT="heart_rate" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/noresidual/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/noresidual/analysis_heart_rate" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S5_init_noresidual CHILD ana_heart_rate_S5_init_noresidual
+JOB ana_geometry_S5_init_noresidual experiments/condor/sonostate_analysis.sub
+VARS ana_geometry_S5_init_noresidual SCRIPT="geometry" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/noresidual/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/noresidual/analysis_geometry" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S5_init_noresidual CHILD ana_geometry_S5_init_noresidual
+JOB ana_ef_probe_S5_init_noresidual experiments/condor/sonostate_analysis.sub
+VARS ana_ef_probe_S5_init_noresidual SCRIPT="ef_probe" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/noresidual/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/noresidual/analysis_ef_probe" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos --target EF"
+PARENT train_S5_init_noresidual CHILD ana_ef_probe_S5_init_noresidual
+JOB ana_cycle_consistency_S5_init_noresidual experiments/condor/sonostate_analysis.sub
+VARS ana_cycle_consistency_S5_init_noresidual SCRIPT="cycle_consistency" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/noresidual/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S5_init/noresidual/analysis_cycle_consistency" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S5_init_noresidual CHILD ana_cycle_consistency_S5_init_noresidual
+
+JOB train_S6_schedule_ep150 experiments/condor/sonostate_train.sub
+VARS train_S6_schedule_ep150 CONFIG="experiments/configs/_generated/S6_schedule/ep150.yaml"
+JOB ana_forecast_curves_S6_schedule_ep150 experiments/condor/sonostate_analysis.sub
+VARS ana_forecast_curves_S6_schedule_ep150 SCRIPT="forecast_curves" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S6_schedule/ep150/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S6_schedule/ep150/analysis_forecast_curves" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S6_schedule_ep150 CHILD ana_forecast_curves_S6_schedule_ep150
+JOB ana_phase_decoding_S6_schedule_ep150 experiments/condor/sonostate_analysis.sub
+VARS ana_phase_decoding_S6_schedule_ep150 SCRIPT="phase_decoding" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S6_schedule/ep150/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S6_schedule/ep150/analysis_phase_decoding" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --vt-csv /scratch/bxu/project/echonet/VolumeTracings.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S6_schedule_ep150 CHILD ana_phase_decoding_S6_schedule_ep150
+JOB ana_heart_rate_S6_schedule_ep150 experiments/condor/sonostate_analysis.sub
+VARS ana_heart_rate_S6_schedule_ep150 SCRIPT="heart_rate" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S6_schedule/ep150/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S6_schedule/ep150/analysis_heart_rate" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S6_schedule_ep150 CHILD ana_heart_rate_S6_schedule_ep150
+JOB ana_geometry_S6_schedule_ep150 experiments/condor/sonostate_analysis.sub
+VARS ana_geometry_S6_schedule_ep150 SCRIPT="geometry" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S6_schedule/ep150/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S6_schedule/ep150/analysis_geometry" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S6_schedule_ep150 CHILD ana_geometry_S6_schedule_ep150
+JOB ana_ef_probe_S6_schedule_ep150 experiments/condor/sonostate_analysis.sub
+VARS ana_ef_probe_S6_schedule_ep150 SCRIPT="ef_probe" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S6_schedule/ep150/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S6_schedule/ep150/analysis_ef_probe" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos --target EF"
+PARENT train_S6_schedule_ep150 CHILD ana_ef_probe_S6_schedule_ep150
+JOB ana_cycle_consistency_S6_schedule_ep150 experiments/condor/sonostate_analysis.sub
+VARS ana_cycle_consistency_S6_schedule_ep150 SCRIPT="cycle_consistency" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S6_schedule/ep150/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S6_schedule/ep150/analysis_cycle_consistency" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S6_schedule_ep150 CHILD ana_cycle_consistency_S6_schedule_ep150
+
+JOB train_S6_schedule_ep300_cool experiments/condor/sonostate_train.sub
+VARS train_S6_schedule_ep300_cool CONFIG="experiments/configs/_generated/S6_schedule/ep300_cool.yaml"
+JOB ana_forecast_curves_S6_schedule_ep300_cool experiments/condor/sonostate_analysis.sub
+VARS ana_forecast_curves_S6_schedule_ep300_cool SCRIPT="forecast_curves" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S6_schedule/ep300_cool/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S6_schedule/ep300_cool/analysis_forecast_curves" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S6_schedule_ep300_cool CHILD ana_forecast_curves_S6_schedule_ep300_cool
+JOB ana_phase_decoding_S6_schedule_ep300_cool experiments/condor/sonostate_analysis.sub
+VARS ana_phase_decoding_S6_schedule_ep300_cool SCRIPT="phase_decoding" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S6_schedule/ep300_cool/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S6_schedule/ep300_cool/analysis_phase_decoding" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --vt-csv /scratch/bxu/project/echonet/VolumeTracings.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S6_schedule_ep300_cool CHILD ana_phase_decoding_S6_schedule_ep300_cool
+JOB ana_heart_rate_S6_schedule_ep300_cool experiments/condor/sonostate_analysis.sub
+VARS ana_heart_rate_S6_schedule_ep300_cool SCRIPT="heart_rate" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S6_schedule/ep300_cool/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S6_schedule/ep300_cool/analysis_heart_rate" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S6_schedule_ep300_cool CHILD ana_heart_rate_S6_schedule_ep300_cool
+JOB ana_geometry_S6_schedule_ep300_cool experiments/condor/sonostate_analysis.sub
+VARS ana_geometry_S6_schedule_ep300_cool SCRIPT="geometry" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S6_schedule/ep300_cool/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S6_schedule/ep300_cool/analysis_geometry" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S6_schedule_ep300_cool CHILD ana_geometry_S6_schedule_ep300_cool
+JOB ana_ef_probe_S6_schedule_ep300_cool experiments/condor/sonostate_analysis.sub
+VARS ana_ef_probe_S6_schedule_ep300_cool SCRIPT="ef_probe" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S6_schedule/ep300_cool/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S6_schedule/ep300_cool/analysis_ef_probe" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos --target EF"
+PARENT train_S6_schedule_ep300_cool CHILD ana_ef_probe_S6_schedule_ep300_cool
+JOB ana_cycle_consistency_S6_schedule_ep300_cool experiments/condor/sonostate_analysis.sub
+VARS ana_cycle_consistency_S6_schedule_ep300_cool SCRIPT="cycle_consistency" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/S6_schedule/ep300_cool/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/S6_schedule/ep300_cool/analysis_cycle_consistency" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_S6_schedule_ep300_cool CHILD ana_cycle_consistency_S6_schedule_ep300_cool
+
+JOB train_C1_shuffled_time_true experiments/condor/sonostate_train.sub
+VARS train_C1_shuffled_time_true CONFIG="experiments/configs/_generated/C1_shuffled_time/true.yaml"
+JOB ana_forecast_curves_C1_shuffled_time_true experiments/condor/sonostate_analysis.sub
+VARS ana_forecast_curves_C1_shuffled_time_true SCRIPT="forecast_curves" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/C1_shuffled_time/true/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/C1_shuffled_time/true/analysis_forecast_curves" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_C1_shuffled_time_true CHILD ana_forecast_curves_C1_shuffled_time_true
+JOB ana_phase_decoding_C1_shuffled_time_true experiments/condor/sonostate_analysis.sub
+VARS ana_phase_decoding_C1_shuffled_time_true SCRIPT="phase_decoding" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/C1_shuffled_time/true/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/C1_shuffled_time/true/analysis_phase_decoding" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --vt-csv /scratch/bxu/project/echonet/VolumeTracings.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_C1_shuffled_time_true CHILD ana_phase_decoding_C1_shuffled_time_true
+JOB ana_heart_rate_C1_shuffled_time_true experiments/condor/sonostate_analysis.sub
+VARS ana_heart_rate_C1_shuffled_time_true SCRIPT="heart_rate" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/C1_shuffled_time/true/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/C1_shuffled_time/true/analysis_heart_rate" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_C1_shuffled_time_true CHILD ana_heart_rate_C1_shuffled_time_true
+JOB ana_geometry_C1_shuffled_time_true experiments/condor/sonostate_analysis.sub
+VARS ana_geometry_C1_shuffled_time_true SCRIPT="geometry" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/C1_shuffled_time/true/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/C1_shuffled_time/true/analysis_geometry" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_C1_shuffled_time_true CHILD ana_geometry_C1_shuffled_time_true
+JOB ana_ef_probe_C1_shuffled_time_true experiments/condor/sonostate_analysis.sub
+VARS ana_ef_probe_C1_shuffled_time_true SCRIPT="ef_probe" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/C1_shuffled_time/true/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/C1_shuffled_time/true/analysis_ef_probe" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos --target EF"
+PARENT train_C1_shuffled_time_true CHILD ana_ef_probe_C1_shuffled_time_true
+JOB ana_cycle_consistency_C1_shuffled_time_true experiments/condor/sonostate_analysis.sub
+VARS ana_cycle_consistency_C1_shuffled_time_true SCRIPT="cycle_consistency" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/C1_shuffled_time/true/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/C1_shuffled_time/true/analysis_cycle_consistency" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_C1_shuffled_time_true CHILD ana_cycle_consistency_C1_shuffled_time_true
+
+JOB train_C1_shuffled_time_shuffled experiments/condor/sonostate_train.sub
+VARS train_C1_shuffled_time_shuffled CONFIG="experiments/configs/_generated/C1_shuffled_time/shuffled.yaml"
+JOB ana_forecast_curves_C1_shuffled_time_shuffled experiments/condor/sonostate_analysis.sub
+VARS ana_forecast_curves_C1_shuffled_time_shuffled SCRIPT="forecast_curves" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/C1_shuffled_time/shuffled/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/C1_shuffled_time/shuffled/analysis_forecast_curves" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_C1_shuffled_time_shuffled CHILD ana_forecast_curves_C1_shuffled_time_shuffled
+JOB ana_phase_decoding_C1_shuffled_time_shuffled experiments/condor/sonostate_analysis.sub
+VARS ana_phase_decoding_C1_shuffled_time_shuffled SCRIPT="phase_decoding" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/C1_shuffled_time/shuffled/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/C1_shuffled_time/shuffled/analysis_phase_decoding" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --vt-csv /scratch/bxu/project/echonet/VolumeTracings.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_C1_shuffled_time_shuffled CHILD ana_phase_decoding_C1_shuffled_time_shuffled
+JOB ana_heart_rate_C1_shuffled_time_shuffled experiments/condor/sonostate_analysis.sub
+VARS ana_heart_rate_C1_shuffled_time_shuffled SCRIPT="heart_rate" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/C1_shuffled_time/shuffled/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/C1_shuffled_time/shuffled/analysis_heart_rate" EXTRA="--filelist-csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_C1_shuffled_time_shuffled CHILD ana_heart_rate_C1_shuffled_time_shuffled
+JOB ana_geometry_C1_shuffled_time_shuffled experiments/condor/sonostate_analysis.sub
+VARS ana_geometry_C1_shuffled_time_shuffled SCRIPT="geometry" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/C1_shuffled_time/shuffled/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/C1_shuffled_time/shuffled/analysis_geometry" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_C1_shuffled_time_shuffled CHILD ana_geometry_C1_shuffled_time_shuffled
+JOB ana_ef_probe_C1_shuffled_time_shuffled experiments/condor/sonostate_analysis.sub
+VARS ana_ef_probe_C1_shuffled_time_shuffled SCRIPT="ef_probe" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/C1_shuffled_time/shuffled/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/C1_shuffled_time/shuffled/analysis_ef_probe" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos --target EF"
+PARENT train_C1_shuffled_time_shuffled CHILD ana_ef_probe_C1_shuffled_time_shuffled
+JOB ana_cycle_consistency_C1_shuffled_time_shuffled experiments/condor/sonostate_analysis.sub
+VARS ana_cycle_consistency_C1_shuffled_time_shuffled SCRIPT="cycle_consistency" CHECKPOINT="/scratch/bxu/project/EchoJEPA/experiments_2026/C1_shuffled_time/shuffled/latest.pt" OUT="/scratch/bxu/project/EchoJEPA/experiments_2026/C1_shuffled_time/shuffled/analysis_cycle_consistency" EXTRA="--csv /scratch/bxu/project/echonet/FileList.csv --video-root /scratch/bxu/project/echonet/EchoNet-Dynamic/Videos"
+PARENT train_C1_shuffled_time_shuffled CHILD ana_cycle_consistency_C1_shuffled_time_shuffled

@@ -41,6 +41,9 @@ def init_video_model(
     use_activation_checkpointing=False,
     state_dim=256,
     transition_hidden_dim=512,
+    transition_zero_init=True,
+    transition_residual=True,
+    transition_init_scale=-4.6,
 ):
     encoder = video_vit.__dict__[model_name](
         img_size=crop_size,
@@ -79,7 +82,13 @@ def init_video_model(
     predictor = PredictorMultiSeqWrapper(predictor)
 
     state_head = StateHead(embed_dim=embed_dim, state_dim=state_dim)
-    transition = Transition(state_dim=state_dim, hidden_dim=transition_hidden_dim)
+    transition = Transition(
+        state_dim=state_dim,
+        hidden_dim=transition_hidden_dim,
+        zero_init=transition_zero_init,
+        residual=transition_residual,
+        init_scale=transition_init_scale,
+    )
 
     encoder.to(device)
     predictor.to(device)
